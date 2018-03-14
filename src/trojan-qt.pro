@@ -9,6 +9,7 @@ QT       += core gui widgets
 
 TARGET = trojan-qt
 TEMPLATE = app
+ICON = trojan-qt.icns
 
 CONFIG += c++11
 
@@ -42,7 +43,8 @@ SOURCES += \
     trojan/src/version.cpp \
     App.cpp \
     main.cpp \
-    TextButton.cpp
+    TextButton.cpp \
+    Window.cpp
 
 HEADERS += \
     trojan/src/clientsession.h \
@@ -55,6 +57,12 @@ HEADERS += \
     trojan/src/trojanrequest.h \
     trojan/src/version.h \
     App.h \
-    TextButton.h
+    TextButton.h \
+    Window.h \
+    version.h
+
+RESOURCES += \
+    img.qrc
+
 
 
