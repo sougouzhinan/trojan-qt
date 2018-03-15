@@ -43,8 +43,8 @@ SOURCES += \
     trojan/src/version.cpp \
     App.cpp \
     main.cpp \
-    TextButton.cpp \
-    Window.cpp
+    Window.cpp \
+    Button.cpp
 
 HEADERS += \
     trojan/src/clientsession.h \
@@ -57,9 +57,9 @@ HEADERS += \
     trojan/src/trojanrequest.h \
     trojan/src/version.h \
     App.h \
-    TextButton.h \
     Window.h \
-    version.h
+    version.h \
+    Button.h
 
 RESOURCES += \
     img.qrc

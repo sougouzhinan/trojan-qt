@@ -5,6 +5,9 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QCoreApplication>
+#include <Button.h>
+#include <QVBoxLayout>
+#include <QLabel>
 
 #include "version.h"
 
@@ -24,6 +27,10 @@ private:
   QAction *show_action;
   QAction *quit_action;
   QSystemTrayIcon *tray_icon;
+
+  QLabel *logo_label;
+  Button *start_button;
+  Button *config_button;
 };
 
 #endif // WINDOW_H
