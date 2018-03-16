@@ -57,8 +57,9 @@ Window::Window(QWidget *parent)
           if(isEditing)
             {
               stacked_widget->setHidden(true);
-              //! TODO: make a function for this in Button
               body_widget->config_button->setText("Edit Config");
+
+              //! TODO: make a function for this in Button
               body_widget->config_button->setColorOption(Button::FgDefault, QColor(150,150,150));
               body_widget->config_button->setColorOption(Button::FgHovered, QColor(150,150,150));
               body_widget->config_button->setColorOption(Button::BgDefault, QColor(255,255,255, 0));
