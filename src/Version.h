@@ -17,40 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef VERSION_H
+#define VERSION_H
 
-#include <QWidget>
-#include <QSystemTrayIcon>
-#include <QMenu>
-#include <QCoreApplication>
-#include <Button.h>
-#include <QVBoxLayout>
-#include <QLabel>
+#endif // VERSION_H
 
-#include "Version.h"
-
-class Window : public QWidget
-{
-  Q_OBJECT
-public:
-  explicit Window(QWidget *parent = nullptr);
-
-signals:
-
-public slots:
-
-private:
-  QMenu *tray_menu;
-  QAction *hide_action;
-  QAction *show_action;
-  QAction *quit_action;
-  QSystemTrayIcon *tray_icon;
-
-  QLabel *logo_label;
-  Button *start_button;
-  Button *config_button;
-  QLabel *settings_button;
-};
-
-#endif // WINDOW_H
+#define VERSION_1 0
+#define VERSION_2 0
+#define VERSION_3 1

@@ -6,9 +6,10 @@
 
 
 QT       += core gui widgets
+DEFINES += QT_DEPRECATED_WARNINGS
 
-TARGET = trojan-qt
 TEMPLATE = app
+TARGET = trojan-qt
 ICON = trojan-qt.icns
 
 CONFIG += c++11
@@ -16,19 +17,12 @@ CONFIG += c++11
 macx{
     INCLUDEPATH += /usr/local/include/
     INCLUDEPATH += /usr/local/opt/openssl/include/
-    LIBS += -L/usr/local/lib -lpthread -L/usr/local/opt/openssl/lib -lssl -lcrypto -L/usr/local/Cellar/boost/1.66.0/lib -lboost_system
+    INCLUDEPATH += /usr/local/opt/boost/include/
+    LIBS += -L/usr/local/lib -lpthread
+    LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto
+    LIBS += -L/usr/local/opt/boost/lib -lboost_system
 }
 
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which has been marked as deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
-
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
 SOURCES += \
@@ -44,7 +38,8 @@ SOURCES += \
     App.cpp \
     main.cpp \
     Window.cpp \
-    Button.cpp
+    Button.cpp \
+    IconButton.cpp
 
 HEADERS += \
     trojan/src/clientsession.h \
@@ -58,8 +53,9 @@ HEADERS += \
     trojan/src/version.h \
     App.h \
     Window.h \
-    version.h \
-    Button.h
+    Button.h \
+    Version.h \
+    IconButton.h
 
 RESOURCES += \
     img.qrc

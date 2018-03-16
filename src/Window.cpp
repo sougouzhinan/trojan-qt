@@ -1,3 +1,22 @@
+/*
+ * This file is part of the trojan project.
+ * Trojan is an unidentifiable mechanism that helps you bypass GFW.
+ * Copyright (C) 2018  Light Bob
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "Window.h"
 
 Window::Window(QWidget *parent)
@@ -10,6 +29,7 @@ Window::Window(QWidget *parent)
   , logo_label(new QLabel(this))
   , start_button(new Button("Start", this))
   , config_button(new Button("Edit Config...", this))
+  , settings_button(new QLabel(this))
 {
   tray_menu->addAction(hide_action);
   tray_menu->addAction(show_action);
@@ -27,10 +47,10 @@ Window::Window(QWidget *parent)
   logo_label->setPixmap(pixmap.scaledToWidth(300, Qt::SmoothTransformation));
   logo_label->setAlignment(Qt::AlignCenter);
 
-  config_button->setPalette(Button::FgDefault, QColor(150,150,150));
-  config_button->setPalette(Button::FgHovered, QColor(100,100,100));
-  config_button->setPalette(Button::BgDefault, QColor(255,255,255));
-  config_button->setPalette(Button::BgHovered, QColor(240,240,240));
+  config_button->setColorOption(Button::FgDefault, QColor(150,150,150));
+  config_button->setColorOption(Button::FgHovered, QColor(100,100,100));
+  config_button->setColorOption(Button::BgDefault, QColor(255,255,255));
+  config_button->setColorOption(Button::BgHovered, QColor(240,240,240));
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setSpacing(0);

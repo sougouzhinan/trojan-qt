@@ -17,40 +17,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef ICONBUTTON_H
+#define ICONBUTTON_H
 
-#include <QWidget>
-#include <QSystemTrayIcon>
-#include <QMenu>
-#include <QCoreApplication>
-#include <Button.h>
-#include <QVBoxLayout>
+#include <QDebug>
+
+#include <QMouseEvent>
 #include <QLabel>
 
-#include "Version.h"
-
-class Window : public QWidget
+class IconButton : public QLabel
 {
   Q_OBJECT
+
 public:
-  explicit Window(QWidget *parent = nullptr);
+  explicit IconButton(QWidget *parent = 0);
+
+  void setDefaultPixmap(const QString &path);
+  void setHoveredPixmap(const QString &path);
+  void setPressedPixmap(const QString &path);
+  void setDefault();
+  void setHovered();
 
 signals:
+  void clicked();
+  void entered();
+  void left();
 
-public slots:
+protected:
+  void enterEvent(QEvent *);
+  void leaveEvent(QEvent *);
+  void mousePressEvent(QMouseEvent *);
+  void mouseReleaseEvent(QMouseEvent *);
 
 private:
-  QMenu *tray_menu;
-  QAction *hide_action;
-  QAction *show_action;
-  QAction *quit_action;
-  QSystemTrayIcon *tray_icon;
-
-  QLabel *logo_label;
-  Button *start_button;
-  Button *config_button;
-  QLabel *settings_button;
+  QPixmap default_pixmap;
+  QPixmap hovered_pixmap;
+  QPixmap pressed_pixmap;
 };
 
-#endif // WINDOW_H
+#endif // ICONBUTTON_H
