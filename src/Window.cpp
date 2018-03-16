@@ -26,10 +26,9 @@ Window::Window(QWidget *parent)
   , quit_action(new QAction(tr("&Quit"), this))
   , tray_menu(new QMenu(this))
   , tray_icon(new QSystemTrayIcon(this))
-  , logo_label(new QLabel(this))
-  , start_button(new Button("Start", this))
-  , config_button(new Button("Edit Config...", this))
-  , settings_button(new QLabel(this))
+  , main_layout(new QHBoxLayout(this))
+  , body_widget(new BodyWidget(this))
+  , stacked_widget(new StackedWidget(this))
 {
   tray_menu->addAction(hide_action);
   tray_menu->addAction(show_action);
@@ -42,24 +41,10 @@ Window::Window(QWidget *parent)
   tray_icon->setVisible(true);
   tray_icon->show();
 
-  QPixmap pixmap(":/img/img/logo.png");
-  pixmap.setDevicePixelRatio(2.0);
-  logo_label->setPixmap(pixmap.scaledToWidth(300, Qt::SmoothTransformation));
-  logo_label->setAlignment(Qt::AlignCenter);
-
-  config_button->setColorOption(Button::FgDefault, QColor(150,150,150));
-  config_button->setColorOption(Button::FgHovered, QColor(100,100,100));
-  config_button->setColorOption(Button::BgDefault, QColor(255,255,255));
-  config_button->setColorOption(Button::BgHovered, QColor(240,240,240));
-
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
-  mainLayout->setSpacing(0);
-  mainLayout->addSpacing(20);
-  mainLayout->addWidget(logo_label);
-  mainLayout->addSpacing(50);
-  mainLayout->addWidget(start_button);
-  mainLayout->addSpacing(8);
-  mainLayout->addWidget(config_button);
+  main_layout->setSpacing(0);
+  main_layout->setMargin(0);
+  main_layout->addWidget(body_widget);
+  main_layout->addWidget(stacked_widget);
 
   connect(hide_action, &QAction::triggered, this, &QWidget::hide);
   connect(show_action, &QAction::triggered, [this](){this->show();this->raise();});
@@ -70,7 +55,7 @@ Window::Window(QWidget *parent)
   palette.setColor(QPalette::Window, Qt::white);
   this->setPalette(palette);
   this->setMinimumSize(QSize(250,0));
-  this->setWindowTitle(QString("Trojan-Qt  v%1.%2.%3").arg(VERSION_1).arg(VERSION_2).arg(VERSION_3));
+  this->setWindowTitle(QString("Trojan Qt  v%1.%2.%3").arg(VERSION_1).arg(VERSION_2).arg(VERSION_3));
 #ifndef Q_OS_OSX
   this->setWindowIcon(QIcon(":/img/img/logo.png"));
 #endif

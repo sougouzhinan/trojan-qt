@@ -29,6 +29,8 @@
 #include <QLabel>
 
 #include "Version.h"
+#include "BodyWidget.h"
+#include "StackedWidget.h"
 
 class Window : public QWidget
 {
@@ -47,10 +49,9 @@ private:
   QAction *quit_action;
   QSystemTrayIcon *tray_icon;
 
-  QLabel *logo_label;
-  Button *start_button;
-  Button *config_button;
-  QLabel *settings_button;
+  QHBoxLayout *main_layout;
+  BodyWidget *body_widget;
+  StackedWidget *stacked_widget;
 };
 
 #endif // WINDOW_H

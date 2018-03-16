@@ -32,9 +32,9 @@ class IconButton : public QLabel
 public:
   explicit IconButton(QWidget *parent = 0);
 
-  void setDefaultPixmap(const QString &path);
-  void setHoveredPixmap(const QString &path);
-  void setPressedPixmap(const QString &path);
+  void setDefaultPixmap(const QString &path, const int &height);
+  void setHoveredPixmap(const QString &path, const int &height);
+  void setPressedPixmap(const QString &path, const int &height);
   void setDefault();
   void setHovered();
 

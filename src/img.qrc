@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/img">
         <file>img/logo.png</file>
-        <file>img/settings.png</file>
+        <file>img/settings_default.png</file>
+        <file>img/settings_hovered.png</file>
     </qresource>
 </RCC>

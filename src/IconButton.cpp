@@ -24,22 +24,25 @@ IconButton::IconButton(QWidget *parent)
 {
 }
 
-void IconButton::setDefaultPixmap(const QString &path)
+void IconButton::setDefaultPixmap(const QString &path, const int &height)
 {
   default_pixmap.load(path);
+  default_pixmap = default_pixmap.scaledToHeight(height, Qt::SmoothTransformation);
   default_pixmap.setDevicePixelRatio(2.0);
   this->setPixmap(default_pixmap);
 }
 
-void IconButton::setHoveredPixmap(const QString &path)
+void IconButton::setHoveredPixmap(const QString &path, const int &height)
 {
   hovered_pixmap.load(path);
+  hovered_pixmap = hovered_pixmap.scaledToHeight(height, Qt::SmoothTransformation);
   hovered_pixmap.setDevicePixelRatio(2.0);
 }
 
-void IconButton::setPressedPixmap(const QString &path)
+void IconButton::setPressedPixmap(const QString &path, const int &height)
 {
   pressed_pixmap.load(path);
+  pressed_pixmap = pressed_pixmap.scaledToHeight(height, Qt::SmoothTransformation);
   pressed_pixmap.setDevicePixelRatio(2.0);
 }
 
@@ -50,7 +53,7 @@ void IconButton::setDefault()
 
 void IconButton::setHovered()
 {
-      this->setPixmap(hovered_pixmap);
+  this->setPixmap(hovered_pixmap);
 }
 
 void IconButton::enterEvent(QEvent *)

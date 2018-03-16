@@ -69,7 +69,7 @@ private:
   QFont font;
   QString text;
 
-  QColor bg_default_color = QColor(235,250,235);
+  QColor bg_default_color = QColor(230,245,225);
   QColor bg_hovered_color = QColor(100,200,90);
   QColor fg_default_color = QColor(100,200,90);
   QColor fg_hovered_color = QColor(255,255,255);

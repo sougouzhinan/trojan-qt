@@ -26,7 +26,7 @@ Button::Button(const QString &str,const int &w, const int &h, QWidget *parent)
   , text(str)
 {
   setText(str);
-  setFont("Gill Sans Light", 13);
+  setFont("Verdana", 13);
   this->setAutoFillBackground(true);
   this->setFixedSize(QSize(w,h));
 }
@@ -36,7 +36,7 @@ Button::Button(const QString &str, QWidget *parent)
   , height(30)
 {
   setText(str);
-  setFont("Gill Sans Light", 13);
+  setFont("Verdana", 13);
   this->setAutoFillBackground(true);
   this->setMinimumSize(QSize(width, height));
 }
