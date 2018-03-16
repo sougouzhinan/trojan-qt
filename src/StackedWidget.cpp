@@ -9,5 +9,6 @@ StackedWidget::StackedWidget(QWidget *parent)
   QPalette palette(this->palette());
   palette.setColor(QPalette::Window, Qt::white);
   this->setPalette(palette);
+  this->setAutoFillBackground(true);
   this->setMinimumSize(QSize(350,0));
 }

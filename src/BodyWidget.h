@@ -19,6 +19,7 @@ class BodyWidget : public QWidget
   Q_OBJECT
 public:
   explicit BodyWidget(QWidget *parent = nullptr);
+  Button *config_button;
 
 private:
   QLabel *logo_label;
@@ -26,7 +27,6 @@ private:
   QRadioButton *server_rbutton;
   QRadioButton *client_rbutton;
   Button *start_button;
-  Button *config_button;
   IconButton *settings_button;
 };
 

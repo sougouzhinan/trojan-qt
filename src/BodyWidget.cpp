@@ -10,18 +10,12 @@ BodyWidget::BodyWidget(QWidget *parent)
   , config_button(new Button("Edit Config", this))
   , settings_button(new IconButton(this))
 {
-  QFont font;
-  font.setFamily("Verdana");
-  font.setPixelSize(14);
-  this->setFont(font);
-
   QPixmap logoPixmap(":/img/img/logo.png");
   logoPixmap.setDevicePixelRatio(2.0);
   logo_label->setPixmap(logoPixmap.scaledToWidth(300, Qt::SmoothTransformation));
   logo_label->setAlignment(Qt::AlignCenter);
 
   mode_label->setStyleSheet("QLabel{color:#999999}");
-  mode_label->setFont(font);
 
   server_rbutton->setStyleSheet("QRadioButton{color:#999999}");
 
@@ -45,6 +39,7 @@ BodyWidget::BodyWidget(QWidget *parent)
   settings_button->setAlignment(Qt::AlignCenter);
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  mainLayout->setContentsMargins(30,0,30,20);
   mainLayout->setSpacing(0);
   mainLayout->addSpacing(20);
   mainLayout->addWidget(logo_label);
@@ -56,7 +51,6 @@ BodyWidget::BodyWidget(QWidget *parent)
   mainLayout->addLayout(mode_layout);
   mainLayout->addSpacing(80);
   mainLayout->addWidget(settings_button);
-//  mainLayout->addSpacing(15);
 
   QPalette palette(this->palette());
   palette.setColor(QPalette::Window, QColor(255,250,240));

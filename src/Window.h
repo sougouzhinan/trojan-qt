@@ -52,6 +52,8 @@ private:
   QHBoxLayout *main_layout;
   BodyWidget *body_widget;
   StackedWidget *stacked_widget;
+
+  bool isEditing = false;
 };
 
 #endif // WINDOW_H

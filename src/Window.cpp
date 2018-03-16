@@ -41,15 +41,47 @@ Window::Window(QWidget *parent)
   tray_icon->setVisible(true);
   tray_icon->show();
 
+  stacked_widget->setHidden(true);
+
   main_layout->setSpacing(0);
   main_layout->setMargin(0);
   main_layout->addWidget(body_widget);
   main_layout->addWidget(stacked_widget);
+  main_layout->setSizeConstraint(QLayout::SetFixedSize);
 
   connect(hide_action, &QAction::triggered, this, &QWidget::hide);
   connect(show_action, &QAction::triggered, [this](){this->show();this->raise();});
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
   connect(tray_icon, &QSystemTrayIcon::activated, [this](){this->show();this->raise();});
+  connect(body_widget->config_button, &Button::clicked, [this](){
+          if(isEditing)
+            {
+              stacked_widget->setHidden(true);
+              //! TODO: make a function for this in Button
+              body_widget->config_button->setText("Edit Config");
+              body_widget->config_button->setColorOption(Button::FgDefault, QColor(150,150,150));
+              body_widget->config_button->setColorOption(Button::FgHovered, QColor(150,150,150));
+              body_widget->config_button->setColorOption(Button::BgDefault, QColor(255,255,255, 0));
+              body_widget->config_button->setColorOption(Button::BgHovered, QColor(255,255,255, 255));
+
+              isEditing = !isEditing;
+            }
+          else
+            {
+              stacked_widget->setHidden(false);
+              body_widget->config_button->setText("Save Config");
+              body_widget->config_button->setColorOption(Button::FgDefault, QColor(250,150,0));
+              body_widget->config_button->setColorOption(Button::FgHovered, QColor(255,255,255));
+              body_widget->config_button->setColorOption(Button::BgDefault, QColor(250,150,0,40));
+              body_widget->config_button->setColorOption(Button::BgHovered, QColor(250,150,0));
+              isEditing = !isEditing;
+            }
+    });
+
+  QFont font;
+  font.setFamily("Verdana");
+  font.setPixelSize(14);
+  this->setFont(font);
 
   QPalette palette(this->palette());
   palette.setColor(QPalette::Window, Qt::white);
