@@ -1,4 +1,4 @@
-![Trojan Qt][./src/img/logo.png]
+![TrojanQt](./screenshot/logo-350.png)
 # Trojan Qt
 #### The fancy GUI client and server of Trojan for desktops
 
@@ -14,8 +14,8 @@ An online documentation can be found [here](https://trojan-gfw.github.io/trojan/
 - [OpenSSL](https://www.openssl.org/) >= 1.0.2
 
 ## Screenshots
-![1][./screenshot/Mar0.png]
-![1][./screenshot/Mar1.png]
+![1](./screenshot/Mar0.png)
+![1](./screenshot/Mar1.png)
 
 ## License
 [GNU General Public License v3.0](LICENSE)
