@@ -28,10 +28,10 @@ BodyWidget::BodyWidget(QWidget *parent)
   mode_layout->addWidget(server_rbutton);
   mode_layout->addWidget(client_rbutton);
 
-  config_button->setColorOption(Button::FgDefault, QColor(150,150,150));
-  config_button->setColorOption(Button::FgHovered, QColor(150,150,150));
-  config_button->setColorOption(Button::BgDefault, QColor(255,255,255, 0));
-  config_button->setColorOption(Button::BgHovered, QColor(255,255,255, 255));
+  config_button->setColor(Button::FgDefault, QColor(150,150,150));
+  config_button->setColor(Button::FgHovered, QColor(150,150,150));
+  config_button->setColor(Button::BgDefault, QColor(255,255,255, 0));
+  config_button->setColor(Button::BgHovered, QColor(255,255,255, 255));
 
   settings_button->setDefaultPixmap(":/img/img/settings_default.png", 50);
   settings_button->setHoveredPixmap(":/img/img/settings_hovered.png", 50);

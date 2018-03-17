@@ -60,7 +60,7 @@ void Button::setText(const QString &str)
   updateText();
 }
 
-void Button::setColorOption(const Button::ColorOption &palette, const QColor &color)
+void Button::setColor(const Button::ColorOption &palette, const QColor &color)
 {
   switch (palette) {
     case ColorOption::BgDefault:
@@ -81,6 +81,38 @@ void Button::setColorOption(const Button::ColorOption &palette, const QColor &co
     case ColorOption::FgHovered:
       {
         fg_hovered_color = color;
+        break;
+      }
+    default:
+      break;
+    }
+}
+
+void Button::setTheme(const Button::Theme &theme)
+{
+  switch (theme) {
+    case Theme::Green:
+      {
+        this->setColor(Button::FgDefault, QColor(230,245,225));
+        this->setColor(Button::FgHovered, QColor(100,200,90));
+        this->setColor(Button::BgDefault, QColor(100,200,90));
+        this->setColor(Button::BgHovered, QColor(255,255,255));
+        break;
+      }
+    case Theme::Amber:
+      {
+        this->setColor(Button::FgDefault, QColor(250,150,0));
+        this->setColor(Button::FgHovered, QColor(255,255,255));
+        this->setColor(Button::BgDefault, QColor(250,150,0,40));
+        this->setColor(Button::BgHovered, QColor(250,150,0));
+        break;
+      }
+    case Theme::Gray:
+      {
+        this->setColor(Button::FgDefault, QColor(150,150,150));
+        this->setColor(Button::FgHovered, QColor(150,150,150));
+        this->setColor(Button::BgDefault, QColor(255,255,255, 0));
+        this->setColor(Button::BgHovered, QColor(255,255,255, 255));
         break;
       }
     default:

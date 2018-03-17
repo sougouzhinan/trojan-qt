@@ -58,23 +58,14 @@ Window::Window(QWidget *parent)
             {
               stacked_widget->setHidden(true);
               body_widget->config_button->setText("Edit Config");
-
-              //! TODO: make a function for this in Button
-              body_widget->config_button->setColorOption(Button::FgDefault, QColor(150,150,150));
-              body_widget->config_button->setColorOption(Button::FgHovered, QColor(150,150,150));
-              body_widget->config_button->setColorOption(Button::BgDefault, QColor(255,255,255, 0));
-              body_widget->config_button->setColorOption(Button::BgHovered, QColor(255,255,255, 255));
-
+              body_widget->config_button->setTheme(Button::Gray);
               isEditing = !isEditing;
             }
           else
             {
               stacked_widget->setHidden(false);
               body_widget->config_button->setText("Save Config");
-              body_widget->config_button->setColorOption(Button::FgDefault, QColor(250,150,0));
-              body_widget->config_button->setColorOption(Button::FgHovered, QColor(255,255,255));
-              body_widget->config_button->setColorOption(Button::BgDefault, QColor(250,150,0,40));
-              body_widget->config_button->setColorOption(Button::BgHovered, QColor(250,150,0));
+              body_widget->config_button->setTheme(Button::Amber);
               isEditing = !isEditing;
             }
     });

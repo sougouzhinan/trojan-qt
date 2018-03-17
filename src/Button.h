@@ -42,6 +42,12 @@ public:
     BgHovered = 3
   };
 
+  enum Theme{
+    Green = 0,
+    Amber = 1,
+    Gray = 3
+  };
+
   explicit Button(const QString &str, const int &w = 0, const int &h = 100, QWidget *parent = 0);
   explicit Button(const QString &str, QWidget *parent = 0);
 
@@ -49,7 +55,8 @@ public:
   void setFont(const QString &family, const int &pixelSize);
   void setText(const QString &str);
 
-  void setColorOption(const ColorOption &palette, const QColor &color);
+  void setColor(const ColorOption &palette, const QColor &color);
+  void setTheme(const Theme &theme);
 
 protected:
   void paintEvent(QPaintEvent *);
