@@ -34,7 +34,14 @@ macx{
     LIBS += -L/usr/local/opt/boost/lib -lboost_system
 }
 
-
+unix{
+    INCLUDEPATH += /usr/local/include/
+    INCLUDEPATH += /usr/local/opt/openssl/include/
+    INCLUDEPATH += /usr/local/opt/boost/include/
+    LIBS += -L/usr/local/lib -lpthread
+    LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto
+    LIBS += -L/usr/local/opt/boost/lib -lboost_system
+}
 
 SOURCES += \
     trojan/src/clientsession.cpp \
@@ -52,7 +59,8 @@ SOURCES += \
     Button.cpp \
     IconButton.cpp \
     BodyWidget.cpp \
-    StackedWidget.cpp
+    StackedWidget.cpp \
+    ServiceThread.cpp
 
 HEADERS += \
     trojan/src/clientsession.h \
@@ -70,7 +78,8 @@ HEADERS += \
     Version.h \
     IconButton.h \
     BodyWidget.h \
-    StackedWidget.h
+    StackedWidget.h \
+    ServiceThread.h
 
 RESOURCES += \
     img.qrc
