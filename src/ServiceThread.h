@@ -7,14 +7,21 @@
 
 class ServiceThread : public QThread {
   Q_OBJECT
-public:
-  ServiceThread(Config &config, QObject *parent = nullptr);
-  void stop();
-  ~ServiceThread();
 private:
   Service *service;
+  Config *_config;
+  void cleanUp();
+public:
+  ServiceThread(QObject *parent = nullptr);
+  Config& config();
+  ~ServiceThread();
 protected:
   void run();
+public slots:
+  void stop();
+signals:
+  void started();
+  void exception(const QString &what);
 };
 
 #endif // SERVICETHREAD_H
