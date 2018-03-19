@@ -1,4 +1,5 @@
 #include "TrojanService.h"
+#include "trojan/src/log.h"
 
 TrojanService::TrojanService(QObject *parent) :
   QObject(parent),
@@ -20,6 +21,7 @@ void TrojanService::start() {
   if (started()) {
     return;
   }
+  Log::level = _config->log_level;
   thread = new ServiceThread(*_config, this);
   thread->start();
 }
