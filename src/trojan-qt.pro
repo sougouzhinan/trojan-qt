@@ -60,7 +60,8 @@ SOURCES += \
     IconButton.cpp \
     BodyWidget.cpp \
     StackedWidget.cpp \
-    ServiceThread.cpp
+    ServiceThread.cpp \
+    TrojanService.cpp
 
 HEADERS += \
     trojan/src/clientsession.h \
@@ -79,7 +80,8 @@ HEADERS += \
     IconButton.h \
     BodyWidget.h \
     StackedWidget.h \
-    ServiceThread.h
+    ServiceThread.h \
+    TrojanService.h
 
 RESOURCES += \
     img.qrc
