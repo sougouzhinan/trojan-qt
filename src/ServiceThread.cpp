@@ -1,17 +1,17 @@
 #include "ServiceThread.h"
 
 ServiceThread::ServiceThread(Config &config, QObject *parent) : QThread(parent) {
-    service = new Service(config);
+  service = new Service(config);
 }
 
 void ServiceThread::stop() {
-    service->stop();
+  service->stop();
 }
 
 ServiceThread::~ServiceThread() {
-    delete service;
+  delete service;
 }
 
 void ServiceThread::run() {
-    service->run();
+  service->run();
 }

@@ -5,18 +5,18 @@
 #include "ServiceThread.h"
 
 class TrojanService : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 private:
-    ServiceThread *thread;
-    Config *_config;
+  ServiceThread *thread;
+  Config *_config;
 public:
-    TrojanService(QObject *parent = nullptr);
-    Config& config();
-    bool started();
-    ~TrojanService();
+  TrojanService(QObject *parent = nullptr);
+  Config& config();
+  bool started();
+  ~TrojanService();
 public slots:
-    void start();
-    void stop();
+  void start();
+  void stop();
 };
 
 #endif // TROJANSERVICE_H

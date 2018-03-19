@@ -6,15 +6,15 @@
 #include "trojan/src/config.h"
 
 class ServiceThread : public QThread {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    ServiceThread(Config &config, QObject *parent = nullptr);
-    void stop();
-    ~ServiceThread();
+  ServiceThread(Config &config, QObject *parent = nullptr);
+  void stop();
+  ~ServiceThread();
 private:
-    Service *service;
+  Service *service;
 protected:
-    void run();
+  void run();
 };
 
 #endif // SERVICETHREAD_H
