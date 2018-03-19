@@ -24,7 +24,7 @@ ServiceThread::~ServiceThread() {
 }
 
 void ServiceThread::stop() {
-  if (isRunning()) {
+  if (isRunning() && service) {
     service->stop();
     wait();
     cleanUp();
@@ -39,6 +39,7 @@ void ServiceThread::run() {
     service->run();
   } catch (const std::exception &e) {
     Log::log_with_date_time(std::string("fatal: ") + e.what(), Log::FATAL);
+    Log::log_with_date_time("exiting. . . ", Log::FATAL);
     cleanUp();
     emit exception(QString(e.what()));
   }
