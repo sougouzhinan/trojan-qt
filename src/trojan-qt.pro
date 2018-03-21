@@ -25,13 +25,11 @@ ICON = trojan-qt.icns
 
 CONFIG += c++11
 
-macx{
-    INCLUDEPATH += /usr/local/include/
-    INCLUDEPATH += /usr/local/opt/openssl/include/
-    INCLUDEPATH += /usr/local/opt/boost/include/
-    LIBS += -L/usr/local/lib -lpthread
-    LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto
-    LIBS += -L/usr/local/opt/boost/lib -lboost_system
+mac{
+    QMAKE_INCDIR += /System/Library/Frameworks/AppKit.framework/Headers /System/Library/Frameworks/Security.framework/Headers /System/Library/Frameworks/ServiceManagement.framework/Headers
+    QMAKE_LFLAGS += -framework IOKit -framework Cocoa -framework Security
+    QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
+    LIBS += -framework Security
 }
 
 unix{
@@ -41,6 +39,10 @@ unix{
     LIBS += -L/usr/local/lib -lpthread
     LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto
     LIBS += -L/usr/local/opt/boost/lib -lboost_system
+
+#    The right way to do it with pkg-config, but it points to the deprecated system OpenSSL.
+#    CONFIG += link_pkgconfig
+#    PKGCONFIG += openssl
 }
 
 SOURCES += \
@@ -82,7 +84,10 @@ HEADERS += \
     ServiceThread.h
 
 RESOURCES += \
-    img.qrc
+    img.qrc \
+    file.qrc
+
+
 
 
 

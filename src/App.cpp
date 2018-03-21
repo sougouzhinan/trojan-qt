@@ -28,7 +28,12 @@ App::App(int &argc, char **argv)
   QApplication::setQuitOnLastWindowClosed(false);
 #endif
 
+  checkDir("/trojanTestFolder"); //Test root priv.
+
   checkDir(APP_DATA_DIR);
+  checkFile(SERVER_CONFIG_FILE, ":/file/file/server.json");
+  checkFile(CLIENT_CONFIG_FILE, ":/file/file/client.json");
+//  checkFile(SETTINGS_FILE, "");
 
 
 
