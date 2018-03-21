@@ -21,8 +21,9 @@
 #define APP_H
 
 #define APP_DATA_DIR QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-#define DEFAULT_CONFIG_FILE APP_DATA_DIR + "/config.json"
-#define SETTINGS_FILE APP_DATA_DIR + "/settings.json"
+#define SERVER_CONFIG_FILE APP_DATA_DIR + "/client.conf"
+#define CLIENT_CONFIG_FILE APP_DATA_DIR + "/server.conf"
+#define SETTINGS_FILE APP_DATA_DIR + "/trojan.conf"
 
 #include <QApplication>
 #include <QStandardPaths>
