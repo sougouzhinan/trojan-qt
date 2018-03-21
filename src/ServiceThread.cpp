@@ -33,7 +33,6 @@ void ServiceThread::stop() {
 
 void ServiceThread::run() {
   try {
-    Log::level = _config->log_level;
     service = new Service(*_config);
     emit started();
     service->run();
