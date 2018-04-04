@@ -11,8 +11,8 @@ Todo | Comment
 Main Interface | Almost finished
 Configuration Editor | Haven't Started
 Settings Interface | Haven't Started
-App Data Files Management | Just Started
-Connection to Trojan | Haven't Started
+App Data Files Management | Almost finished
+Connection to Trojan | Blocks Main Thread
 
 ## Documentation
 An online documentation can be found [here](https://trojan-gfw.github.io/trojan/).
