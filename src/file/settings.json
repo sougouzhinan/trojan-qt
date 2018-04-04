@@ -1,0 +1,5 @@
+{
+    "current_mode": "client",
+    "client_config": "%1/client.json",
+    "server_config": "%1/server.json"
+}

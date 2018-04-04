@@ -21,14 +21,16 @@
 #define APP_H
 
 #define APP_DATA_DIR QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-#define SERVER_CONFIG_FILE APP_DATA_DIR + "/client.conf"
-#define CLIENT_CONFIG_FILE APP_DATA_DIR + "/server.conf"
-#define SETTINGS_FILE APP_DATA_DIR + "/trojan.conf"
+#define SERVER_CONFIG_PATH APP_DATA_DIR + "/client.json"
+#define CLIENT_CONFIG_PATH APP_DATA_DIR + "/server.json"
+#define TROJAN_CONFIG_PATH APP_DATA_DIR + "/settings.json"
 
 #include <QApplication>
 #include <QStandardPaths>
 #include <QFile>
 #include <QDir>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <cstdlib>
 #include <string>
 #include "trojan/src/log.h"
@@ -49,7 +51,12 @@ public:
 
   Window *window;
 
+  static QString client_config_path;
+  static QString server_config_path;
+  static Config::RunType current_run_type;
+
 private:
+  bool loadSettings();
   bool checkDir(const QString &dir);
   bool checkFile(const QString &path, const QString &populateDir);
 

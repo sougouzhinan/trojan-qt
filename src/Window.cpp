@@ -79,7 +79,8 @@ Window::Window(QWidget *parent)
   palette.setColor(QPalette::Window, Qt::white);
   this->setPalette(palette);
   this->setMinimumSize(QSize(250,0));
-  this->setWindowTitle(QString("Trojan Qt  v%1.%2.%3").arg(VERSION_1).arg(VERSION_2).arg(VERSION_3));
+  this->setWindowTitle(QString("Trojan Qt"));
+
 #ifndef Q_OS_OSX
   this->setWindowIcon(QIcon(":/img/img/logo.png"));
 #endif

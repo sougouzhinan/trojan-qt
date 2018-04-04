@@ -19,6 +19,11 @@
 
 #include "App.h"
 
+QString App::client_config_path;
+QString App::server_config_path;
+Config::RunType App::current_run_type;
+
+
 App::App(int &argc, char **argv)
   : QApplication(argc, argv)
   , window(new Window())
@@ -28,38 +33,77 @@ App::App(int &argc, char **argv)
   QApplication::setQuitOnLastWindowClosed(false);
 #endif
 
-  checkDir("/trojanTestFolder"); //Test root priv.
+//  checkDir("/trojanTestFolder"); //Test root priv.
 
   checkDir(APP_DATA_DIR);
-  checkFile(SERVER_CONFIG_FILE, ":/file/file/server.json");
-  checkFile(CLIENT_CONFIG_FILE, ":/file/file/client.json");
-//  checkFile(SETTINGS_FILE, "");
+  checkFile(TROJAN_CONFIG_PATH, ":/file/file/settings.json");
+  loadSettings();
+  checkFile(client_config_path, ":/file/file/client.json");
+  checkFile(server_config_path, ":/file/file/server.json");
 
-
-
-
-//  Log::log("Welcome to trojan " + Version::get_version(), Log::FATAL);
-//  if (argc != 2) {
-//      Log::log(std::string("usage: ") + argv[0] + " config_file", Log::FATAL);
-//      //    exit(1);
-//      //! GUI
-//    }
-
-//  Config config;
-//  try {
-//    config.load(argv[1]);
-//    Service service(config);
-//    service.run();
-//  } catch (const std::exception &e) {
-//    Log::log_with_date_time(std::string("fatal: ") + e.what(), Log::FATAL);
-//    Log::log_with_date_time("exiting. . . ", Log::FATAL);
-////    exit(1);
-//  }
+  Config config;
+  try {
+    config.load(current_run_type == Config::CLIENT ? client_config_path.toStdString() : server_config_path.toStdString());
+    Service service(config);
+    service.run();
+  } catch (const std::exception &e) {
+    Log::log_with_date_time(std::string("fatal: ") + e.what(), Log::FATAL);
+    Log::log_with_date_time("exiting. . . ", Log::FATAL);
+    this->exit(1);
+  }
 }
 
 App::~App()
 {
 
+}
+
+bool App::loadSettings()
+{
+  if(!checkFile(TROJAN_CONFIG_PATH, ":/file/file/settings.json"))
+    {
+      return false;
+    }
+  QFile f(TROJAN_CONFIG_PATH);
+  if(!f.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+      return false;
+    }
+
+  QTextStream inStream(&f);
+  QByteArray inByteArray = inStream.readAll().toUtf8();
+
+  QJsonParseError jsonError;
+  QJsonDocument inDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
+  if(jsonError.error == QJsonParseError::NoError && inDoc.isObject())
+    {
+      //! Read.
+      QJsonObject obj = inDoc.object();
+      client_config_path = obj.value("client_config").toString().arg(APP_DATA_DIR);
+      server_config_path = obj.value("server_config").toString().arg(APP_DATA_DIR);
+      current_run_type = obj.value("current_mode").toString().toLower() == "client" ? Config::CLIENT : Config::SERVER;
+
+      f.close();
+      f.flush();
+    }
+  else
+    {
+      //! Mend.
+      //! This is not the perfect way to do it, but it works well.
+      //! Because it enters default settings by code instead of reading from the file.
+      //! When the config file is getting more complicated, it brings inconvenience to the development.
+      f.close();
+      f.flush();
+
+      if(!QFile::copy(TROJAN_CONFIG_PATH, ":/file/file/settings.json"))
+        {
+          return false;
+        }
+      client_config_path = CLIENT_CONFIG_PATH;
+      server_config_path = SERVER_CONFIG_PATH;
+      current_run_type = Config::CLIENT;
+    }
+  return true;
 }
 
 bool App::checkDir(const QString &dir)
@@ -82,8 +126,10 @@ bool App::checkFile(const QString &path, const QString &populateDir)
     {
       if(!QFile::copy(populateDir, path))
         {
+          Log::log_with_date_time(QString("Fail to copy " + populateDir + " to " + path).toStdString(), Log::FATAL);
           return false;
         }
+      Log::log_with_date_time(QString("copied " + populateDir + " to " + path).toStdString(), Log::INFO);
     }
   return true;
 }
