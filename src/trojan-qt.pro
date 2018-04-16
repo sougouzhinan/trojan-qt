@@ -52,8 +52,10 @@ SOURCES += \
     trojan/src/serversession.cpp \
     trojan/src/service.cpp \
     trojan/src/session.cpp \
+    trojan/src/socks5address.cpp \
     trojan/src/ssldefaults.cpp \
     trojan/src/trojanrequest.cpp \
+    trojan/src/udppacket.cpp \
     trojan/src/version.cpp \
     App.cpp \
     main.cpp \
