@@ -28,10 +28,7 @@ BodyWidget::BodyWidget(QWidget *parent)
   mode_layout->addWidget(server_rbutton);
   mode_layout->addWidget(client_rbutton);
 
-  config_button->setColor(Button::FgDefault, QColor(150,150,150));
-  config_button->setColor(Button::FgHovered, QColor(150,150,150));
-  config_button->setColor(Button::BgDefault, QColor(255,255,255, 0));
-  config_button->setColor(Button::BgHovered, QColor(255,255,255, 255));
+  config_button->setTheme(Button::Gray);
 
   settings_button->setDefaultPixmap(":/img/img/settings_default.png", 50);
   settings_button->setHoveredPixmap(":/img/img/settings_hovered.png", 50);
@@ -53,8 +50,30 @@ BodyWidget::BodyWidget(QWidget *parent)
   mainLayout->addWidget(settings_button);
 
   QPalette palette(this->palette());
-  palette.setColor(QPalette::Window, QColor(255,250,240));
+  palette.setColor(QPalette::Window, QColor(255,255,250));
   this->setAutoFillBackground(true);
   this->setPalette(palette);
   this->setFixedWidth(250);
+  setStartButtonState(StartButtonState::Start);
 }
+
+void BodyWidget::setStartButtonState(BodyWidget::StartButtonState state)
+{
+  switch (state) {
+    case StartButtonState::Disabled:
+      start_button->setTheme(Button::Gray);
+      start_button->setText("Starting");
+      break;
+    case StartButtonState::Start:
+      start_button->setTheme(Button::Green);
+      start_button->setText("Start");
+      break;
+    case StartButtonState::Stop:
+      start_button->setTheme(Button::Amber);
+      start_button->setText("Stop");
+      break;
+    default:
+      break;
+    }
+}
+

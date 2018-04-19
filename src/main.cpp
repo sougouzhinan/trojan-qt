@@ -48,20 +48,21 @@ int main(int argc, char *argv[]) {
   QCoreApplication::setSetuidAllowed(true);
   App app(argc, argv);
 
-#ifdef Q_OS_MAC
-  if (geteuid() != 0) {
-      if (relaunch_as_root()) {
-          /* We have re-launched with root privs. Exit this process. */
-          return 0;
-      }
+//! Commented for debug convenience.
+//#ifdef Q_OS_MAC
+//  if (geteuid() != 0) {
+//      if (relaunch_as_root()) {
+//          /* We have re-launched with root privs. Exit this process. */
+//          return 0;
+//      }
 
-      QMessageBox msgBox;
-      msgBox.setText("This program requires root privileges to fully function.");
-      msgBox.setInformativeText("Trojan will not be able to read and write key file.");
-      msgBox.exec();
-      return -1;
-  }
-#endif
+//      QMessageBox msgBox;
+//      msgBox.setText("This program requires root privileges to fully function.");
+//      msgBox.setInformativeText("Trojan will not be able to read and write key file.");
+//      msgBox.exec();
+//      return -1;
+//  }
+//#endif
 
   app.window->show();
   return app.exec();

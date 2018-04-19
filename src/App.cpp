@@ -19,14 +19,10 @@
 
 #include "App.h"
 
-QString App::client_config_path;
-QString App::server_config_path;
-Config::RunType App::current_run_type;
-
-
 App::App(int &argc, char **argv)
   : QApplication(argc, argv)
   , window(new Window())
+  , service(new ServiceThread(this))
 {
 
 #ifdef Q_OS_OSX
@@ -38,19 +34,12 @@ App::App(int &argc, char **argv)
   checkDir(APP_DATA_DIR);
   checkFile(TROJAN_CONFIG_PATH, ":/file/file/settings.json");
   loadSettings();
-  checkFile(client_config_path, ":/file/file/client.json");
-  checkFile(server_config_path, ":/file/file/server.json");
+  checkFile(Global::client_config_path, ":/file/file/client.json");
+  checkFile(Global::server_config_path, ":/file/file/server.json");
 
-  Config config;
-  try {
-    config.load(current_run_type == Config::CLIENT ? client_config_path.toStdString() : server_config_path.toStdString());
-    Service service(config);
-    service.run();
-  } catch (const std::exception &e) {
-    Log::log_with_date_time(std::string("fatal: ") + e.what(), Log::FATAL);
-    Log::log_with_date_time("exiting. . . ", Log::FATAL);
-    this->exit(1);
-  }
+  connect(service, &ServiceThread::started, window, &Window::onServerStarted);
+  connect(service, &ServiceThread::exception, this, &App::popErrorBox);
+  connect(window, &Window::startTriggered, this, &App::startTrojan);
 }
 
 App::~App()
@@ -79,9 +68,9 @@ bool App::loadSettings()
     {
       //! Read.
       QJsonObject obj = inDoc.object();
-      client_config_path = obj.value("client_config").toString().arg(APP_DATA_DIR);
-      server_config_path = obj.value("server_config").toString().arg(APP_DATA_DIR);
-      current_run_type = obj.value("current_mode").toString().toLower() == "client" ? Config::CLIENT : Config::SERVER;
+      Global::client_config_path = obj.value("client_config").toString().arg(APP_DATA_DIR);
+      Global::server_config_path = obj.value("server_config").toString().arg(APP_DATA_DIR);
+      Global::current_run_type = obj.value("current_mode").toString().toLower() == "client" ? Config::CLIENT : Config::SERVER;
 
       f.close();
       f.flush();
@@ -99,9 +88,9 @@ bool App::loadSettings()
         {
           return false;
         }
-      client_config_path = CLIENT_CONFIG_PATH;
-      server_config_path = SERVER_CONFIG_PATH;
-      current_run_type = Config::CLIENT;
+      Global::client_config_path = CLIENT_CONFIG_PATH;
+      Global::server_config_path = SERVER_CONFIG_PATH;
+      Global::current_run_type = Config::CLIENT;
     }
   return true;
 }
@@ -132,4 +121,18 @@ bool App::checkFile(const QString &path, const QString &populateDir)
       Log::log_with_date_time(QString("copied " + populateDir + " to " + path).toStdString(), Log::INFO);
     }
   return true;
+}
+
+void App::startTrojan()
+{
+  service->config().load(Global::current_run_type == Config::CLIENT ?
+                             Global::client_config_path.toStdString() : Global::server_config_path.toStdString());
+  service->start();
+}
+
+void App::popErrorBox(const QString &what)
+{
+  window->onServerStarted(false);
+  Global::popMessageBox(Global::ERROR, what, window);
+
 }

@@ -20,7 +20,7 @@ protected:
 public slots:
   void stop();
 signals:
-  void started();
+  void started(const bool &sucess);
   void exception(const QString &what);
 };
 

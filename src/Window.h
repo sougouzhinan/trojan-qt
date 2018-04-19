@@ -39,8 +39,11 @@ public:
   explicit Window(QWidget *parent = nullptr);
 
 signals:
+  void modeSwiched(const Config::RunType &t);
+  void startTriggered();
 
 public slots:
+  void onServerStarted(const bool &sucess);
 
 private:
   QMenu *tray_menu;
@@ -54,6 +57,10 @@ private:
   StackedWidget *stacked_widget;
 
   bool isEditing = false;
+
+private slots:
+  void onStartButtonClicked();
+  void onModeSwitched(bool checked);
 };
 
 #endif // WINDOW_H

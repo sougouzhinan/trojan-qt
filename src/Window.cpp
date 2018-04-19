@@ -53,6 +53,8 @@ Window::Window(QWidget *parent)
   connect(show_action, &QAction::triggered, [this](){this->show();this->raise();});
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
   connect(tray_icon, &QSystemTrayIcon::activated, [this](){this->show();this->raise();});
+  connect(body_widget->start_button, &Button::clicked, this, &Window::onStartButtonClicked);
+  connect(body_widget->server_rbutton, &QRadioButton::toggled, this, &Window::onModeSwitched);
   connect(body_widget->config_button, &Button::clicked, [this](){
           if(isEditing)
             {
@@ -86,4 +88,42 @@ Window::Window(QWidget *parent)
 #endif
 
 
+}
+
+void Window::onServerStarted(const bool &sucess)
+{
+  if(sucess)
+    {
+      body_widget->setEnabled(true);
+      body_widget->setStartButtonState(BodyWidget::Stop);
+    }
+  else
+    {
+      body_widget->setEnabled(true);
+      body_widget->setStartButtonState(BodyWidget::Start);
+    }
+}
+
+void Window::onStartButtonClicked()
+{
+  body_widget->setEnabled(false);/*
+  body_widget->start_button->setEnabled(false);
+  body_widget->config_button->setEnabled(false);*/
+  body_widget->setStartButtonState(BodyWidget::Disabled);
+  emit startTriggered();
+}
+
+
+void Window::onModeSwitched(bool checked)
+{
+  if(checked)
+    {
+      emit modeSwiched(Config::SERVER);
+      qDebug()<<"server mode";
+    }
+  else
+    {
+      emit modeSwiched(Config::CLIENT);
+      qDebug()<<"client mode";
+    }
 }

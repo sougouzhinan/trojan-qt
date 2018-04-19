@@ -31,6 +31,7 @@
 #include <QDir>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QMessageBox>
 #include <cstdlib>
 #include <string>
 #include "trojan/src/log.h"
@@ -39,6 +40,8 @@
 #include "trojan/src/version.h"
 
 #include "Window.h"
+#include "ServiceThread.h"
+
 
 
 class App : public QApplication
@@ -49,16 +52,19 @@ public:
   App(int &argc, char **argv);
   ~App();
 
+  static void popMessageBox(QString msg, QString info);
+
   Window *window;
 
-  static QString client_config_path;
-  static QString server_config_path;
-  static Config::RunType current_run_type;
-
 private:
+  ServiceThread *service;
   bool loadSettings();
   bool checkDir(const QString &dir);
   bool checkFile(const QString &path, const QString &populateDir);
+
+private slots:
+  void startTrojan();
+  void popErrorBox(const QString &what);
 
 };
 

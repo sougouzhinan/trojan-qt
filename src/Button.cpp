@@ -93,10 +93,10 @@ void Button::setTheme(const Button::Theme &theme)
   switch (theme) {
     case Theme::Green:
       {
-        this->setColor(Button::FgDefault, QColor(230,245,225));
-        this->setColor(Button::FgHovered, QColor(100,200,90));
-        this->setColor(Button::BgDefault, QColor(100,200,90));
-        this->setColor(Button::BgHovered, QColor(255,255,255));
+        this->setColor(Button::BgDefault, QColor(230,245,225));
+        this->setColor(Button::BgHovered, QColor(100,200,90));
+        this->setColor(Button::FgDefault, QColor(100,200,90));
+        this->setColor(Button::FgHovered, QColor(255,255,255));
         break;
       }
     case Theme::Amber:

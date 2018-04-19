@@ -34,11 +34,10 @@ void ServiceThread::stop() {
 void ServiceThread::run() {
   try {
     service = new Service(*_config);
-    emit started();
+    emit started(true);
     service->run();
   } catch (const std::exception &e) {
     Log::log_with_date_time(std::string("fatal: ") + e.what(), Log::FATAL);
-    Log::log_with_date_time("exiting. . . ", Log::FATAL);
     cleanUp();
     emit exception(QString(e.what()));
   }
