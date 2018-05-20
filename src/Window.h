@@ -31,6 +31,7 @@
 #include "Version.h"
 #include "BodyWidget.h"
 #include "StackedWidget.h"
+#include "ConfigEditor.h"
 
 class Window : public QWidget
 {
@@ -54,7 +55,7 @@ private:
 
   QHBoxLayout *main_layout;
   BodyWidget *body_widget;
-  StackedWidget *stacked_widget;
+  QStackedWidget *stacked_widget;
 
   bool isEditing = false;
 

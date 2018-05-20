@@ -65,7 +65,8 @@ SOURCES += \
     BodyWidget.cpp \
     StackedWidget.cpp \
     ServiceThread.cpp \
-    Global.cpp
+    Global.cpp \
+    ConfigEditor.cpp
 
 HEADERS += \
     trojan/src/clientsession.h \
@@ -85,7 +86,8 @@ HEADERS += \
     BodyWidget.h \
     StackedWidget.h \
     ServiceThread.h \
-    Global.h
+    Global.h \
+    ConfigEditor.h
 
 RESOURCES += \
     img.qrc \

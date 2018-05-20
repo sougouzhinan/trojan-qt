@@ -50,7 +50,8 @@ BodyWidget::BodyWidget(QWidget *parent)
   mainLayout->addWidget(settings_button);
 
   QPalette palette(this->palette());
-  palette.setColor(QPalette::Window, QColor(255,255,250));
+//  palette.setColor(QPalette::Window, QColor(255,255,250));
+  palette.setColor(QPalette::Window, QColor(255,255,255));
   this->setAutoFillBackground(true);
   this->setPalette(palette);
   this->setFixedWidth(250);

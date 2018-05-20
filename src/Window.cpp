@@ -28,7 +28,7 @@ Window::Window(QWidget *parent)
   , tray_icon(new QSystemTrayIcon(this))
   , main_layout(new QHBoxLayout(this))
   , body_widget(new BodyWidget(this))
-  , stacked_widget(new StackedWidget(this))
+  , stacked_widget(new QStackedWidget(this))
 {
   tray_menu->addAction(hide_action);
   tray_menu->addAction(show_action);
@@ -41,7 +41,9 @@ Window::Window(QWidget *parent)
   tray_icon->setVisible(true);
   tray_icon->show();
 
+  ConfigEditor *e= new ConfigEditor(this);
   stacked_widget->setHidden(true);
+  stacked_widget->addWidget(e);
 
   main_layout->setSpacing(0);
   main_layout->setMargin(0);
