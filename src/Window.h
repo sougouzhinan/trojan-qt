@@ -24,10 +24,11 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QCoreApplication>
-#include <Button.h>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QScrollArea>
 
+#include "Button.h"
 #include "Version.h"
 #include "BodyWidget.h"
 #include "StackedWidget.h"
@@ -55,6 +56,7 @@ private:
 
   QHBoxLayout *main_layout;
   BodyWidget *body_widget;
+  QScrollArea *scroll_area;
   QStackedWidget *stacked_widget;
 
   bool isEditing = false;

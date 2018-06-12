@@ -42,13 +42,17 @@ Window::Window(QWidget *parent)
   tray_icon->show();
 
   ConfigEditor *e= new ConfigEditor(this);
-  stacked_widget->setHidden(true);
   stacked_widget->addWidget(e);
+  scroll_area = new QScrollArea(this);
+  scroll_area->setWidget(stacked_widget);
+  scroll_area->setMinimumWidth(450);
+  scroll_area->setHidden(true);
+  scroll_area->setFrameStyle(0);
 
   main_layout->setSpacing(0);
   main_layout->setMargin(0);
   main_layout->addWidget(body_widget);
-  main_layout->addWidget(stacked_widget);
+  main_layout->addWidget(scroll_area);
   main_layout->setSizeConstraint(QLayout::SetFixedSize);
 
   connect(hide_action, &QAction::triggered, this, &QWidget::hide);
@@ -60,14 +64,14 @@ Window::Window(QWidget *parent)
   connect(body_widget->config_button, &Button::clicked, [this](){
           if(isEditing)
             {
-              stacked_widget->setHidden(true);
+              scroll_area->setHidden(true);
               body_widget->config_button->setText("Edit Config");
               body_widget->config_button->setTheme(Button::Gray);
               isEditing = !isEditing;
             }
           else
             {
-              stacked_widget->setHidden(false);
+              scroll_area->setHidden(false);
               body_widget->config_button->setText("Save Config");
               body_widget->config_button->setTheme(Button::Amber);
               isEditing = !isEditing;

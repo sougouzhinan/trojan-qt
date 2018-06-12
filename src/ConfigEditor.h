@@ -6,6 +6,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
+#include <QSpinBox>
 
 class ConfigEditor : public QWidget
 {
@@ -38,10 +39,10 @@ private:
   QLineEdit *ssl_curves_le;
   QLineEdit *ssl_sig_algorithm_le;
 
-
-
-
-
+  QCheckBox *tcp_keep_alive_check;
+  QCheckBox *tcp_no_delay_check;
+  QCheckBox *tcp_fast_open_check;
+  QSpinBox *tcp_fast_open_queue_length_box;
 
 };
 

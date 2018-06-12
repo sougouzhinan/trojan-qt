@@ -18,6 +18,10 @@ ConfigEditor::ConfigEditor(QWidget *parent)
   , ssl_reuse_session_check(new QCheckBox(this))
   , ssl_curves_le(new QLineEdit(this))
   , ssl_sig_algorithm_le(new QLineEdit(this))
+  , tcp_keep_alive_check(new QCheckBox(this))
+  , tcp_no_delay_check(new QCheckBox(this))
+  , tcp_fast_open_check(new QCheckBox(this))
+  , tcp_fast_open_queue_length_box(new QSpinBox(this))
 {
   remote_addr_le->setPlaceholderText("0.0.0.0");
   remote_port_le->setPlaceholderText("443");
@@ -36,9 +40,12 @@ ConfigEditor::ConfigEditor(QWidget *parent)
   ssl_cert_path_le->setPlaceholderText("/path/to/cert.crt");
   ssl_server_name_indication_le->setPlaceholderText("example.com");
   ssl_reuse_session_check->setChecked(true);
+  tcp_fast_open_queue_length_box->setValue(5);
+  tcp_fast_open_queue_length_box->setMinimumWidth(140); //! to align properly
 
   QLabel *general_label = new QLabel("General", this);
   QFormLayout *general_form_layout = new QFormLayout();
+  general_form_layout->setLabelAlignment(Qt::AlignLeading);
   general_form_layout->addRow("local address", local_addr_le);
   general_form_layout->addRow("local port", local_port_le);
   general_form_layout->addRow("remote address", remote_addr_le);
@@ -49,6 +56,7 @@ ConfigEditor::ConfigEditor(QWidget *parent)
 
   QLabel *ssl_label = new QLabel("SSL Options", this);
   QFormLayout *ssl_form_layout = new QFormLayout();
+  ssl_form_layout->setLabelAlignment(Qt::AlignLeading);
   ssl_form_layout->addRow("enable SSL", ssl_verify_check);
   ssl_form_layout->addRow("verify hostname", ssl_verify_hostname_check);
   ssl_form_layout->addRow("certificate path", ssl_cert_path_le);
@@ -59,12 +67,23 @@ ConfigEditor::ConfigEditor(QWidget *parent)
   ssl_form_layout->addRow("curve", ssl_curves_le);
   ssl_form_layout->addRow("signature algorithm", ssl_sig_algorithm_le);
 
+  QLabel *tcp_label = new QLabel("TCP Options", this);
+  QFormLayout *tcp_form_layout = new QFormLayout();
+  tcp_form_layout->setLabelAlignment(Qt::AlignLeading);
+  tcp_form_layout->addRow("keep alive", tcp_keep_alive_check);
+  tcp_form_layout->addRow("no delay", tcp_no_delay_check);
+  tcp_form_layout->addRow("fast open", tcp_fast_open_check);
+  tcp_form_layout->addRow("fast open queue length", tcp_fast_open_queue_length_box);
+
   QVBoxLayout *main_layout = new QVBoxLayout(this);
+  main_layout->setAlignment(Qt::AlignLeading);
   main_layout->setMargin(30);
   main_layout->addWidget(general_label);
   main_layout->addLayout(general_form_layout);
   main_layout->addWidget(ssl_label);
   main_layout->addLayout(ssl_form_layout);
+  main_layout->addWidget(tcp_label);
+  main_layout->addLayout(tcp_form_layout);
 
   connect(ssl_verify_check, &QCheckBox::toggled, [this](bool toggled) {
       ssl_verify_hostname_check->setEnabled(toggled);
