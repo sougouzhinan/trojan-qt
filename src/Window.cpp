@@ -41,13 +41,21 @@ Window::Window(QWidget *parent)
   tray_icon->setVisible(true);
   tray_icon->show();
 
-  ConfigEditor *e= new ConfigEditor(this);
+  ConfigEditor *e = new ConfigEditor(this);
   stacked_widget->addWidget(e);
+  stacked_widget->setContentsMargins(0,0,0,0);
   scroll_area = new QScrollArea(this);
+  scroll_area->setWidgetResizable(true);
   scroll_area->setWidget(stacked_widget);
   scroll_area->setMinimumWidth(450);
   scroll_area->setHidden(true);
   scroll_area->setFrameStyle(0);
+  scroll_area->setContentsMargins(0,0,0,0);
+
+  QPalette p(this->palette());
+  p.setColor(QPalette::Foreground, QColor(120,120,120));
+  p.setColor(QPalette::Window, QColor(250,0,250));
+  scroll_area->setPalette(p);
 
   main_layout->setSpacing(0);
   main_layout->setMargin(0);

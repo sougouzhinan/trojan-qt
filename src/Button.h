@@ -45,6 +45,7 @@ public:
   enum Theme{
     Green = 0,
     Amber = 1,
+    Blue = 2,
     Gray = 3
   };
 

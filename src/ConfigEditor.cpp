@@ -96,5 +96,5 @@ ConfigEditor::ConfigEditor(QWidget *parent)
   palette.setColor(QPalette::Window, QColor(250,250,250));
   this->setPalette(palette);
   this->setAutoFillBackground(true);
-  this->setMinimumSize(QSize(450,0));
+//  this->setMinimumSize(QSize(800,1));
 }

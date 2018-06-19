@@ -107,6 +107,14 @@ void Button::setTheme(const Button::Theme &theme)
         this->setColor(Button::BgHovered, QColor(250,150,0));
         break;
       }
+    case Theme::Blue:
+      {
+        this->setColor(Button::FgDefault, QColor(0,150,250));
+        this->setColor(Button::FgHovered, QColor(255,255,255));
+        this->setColor(Button::BgDefault, QColor(0,150,250,40));
+        this->setColor(Button::BgHovered, QColor(0,150,250));
+        break;
+      }
     case Theme::Gray:
       {
         this->setColor(Button::FgDefault, QColor(150,150,150));

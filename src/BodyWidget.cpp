@@ -28,6 +28,7 @@ BodyWidget::BodyWidget(QWidget *parent)
   mode_layout->addWidget(server_rbutton);
   mode_layout->addWidget(client_rbutton);
 
+  start_button->setTheme(Button::Blue);
   config_button->setTheme(Button::Gray);
 
   settings_button->setDefaultPixmap(":/img/img/settings_default.png", 50);
@@ -66,7 +67,7 @@ void BodyWidget::setStartButtonState(BodyWidget::StartButtonState state)
       start_button->setText("Starting");
       break;
     case StartButtonState::Start:
-      start_button->setTheme(Button::Green);
+      start_button->setTheme(Button::Blue);
       start_button->setText("Start");
       break;
     case StartButtonState::Stop:
