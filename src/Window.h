@@ -56,6 +56,7 @@ private:
 
   QHBoxLayout *main_layout;
   BodyWidget *body_widget;
+  ConfigEditor *config_editor;
   QScrollArea *scroll_area;
   QStackedWidget *stacked_widget;
 

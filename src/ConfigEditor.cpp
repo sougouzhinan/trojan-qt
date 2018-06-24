@@ -28,6 +28,7 @@ ConfigEditor::ConfigEditor(QWidget *parent)
   passwd_le->setEchoMode(QLineEdit::Password);
   passwd_le->setPlaceholderText("••••••••");
   append_payload_check->setChecked(true);
+  append_payload_check->setHidden(true);
   log_level_combo->addItem("off");
   log_level_combo->addItem("verbose");
   log_level_combo->addItem("information");
@@ -44,36 +45,36 @@ ConfigEditor::ConfigEditor(QWidget *parent)
   tcp_fast_open_queue_length_box->setMinimumWidth(140); //! to align properly
 
   QLabel *general_label = new QLabel("General", this);
-  QFormLayout *general_form_layout = new QFormLayout();
+  general_form_layout = new QFormLayout();
   general_form_layout->setLabelAlignment(Qt::AlignLeading);
-  general_form_layout->addRow("local address", local_addr_le);
-  general_form_layout->addRow("local port", local_port_le);
-  general_form_layout->addRow("remote address", remote_addr_le);
-  general_form_layout->addRow("remote port", remote_port_le);
-  general_form_layout->addRow("password", passwd_le);
-  general_form_layout->addRow("append payload", append_payload_check);
-  general_form_layout->addRow("log level", log_level_combo);
+  general_form_layout->insertRow(0, "local address", local_addr_le);
+  general_form_layout->insertRow(1, "local port", local_port_le);
+  general_form_layout->insertRow(2, "remote address", remote_addr_le);
+  general_form_layout->insertRow(3, "remote port", remote_port_le);
+  general_form_layout->insertRow(4, "password", passwd_le);
+  general_form_layout->insertRow(5, "append payload", append_payload_check);
+  general_form_layout->insertRow(6, "log level", log_level_combo);
 
   QLabel *ssl_label = new QLabel("SSL Options", this);
-  QFormLayout *ssl_form_layout = new QFormLayout();
+  ssl_form_layout = new QFormLayout();
   ssl_form_layout->setLabelAlignment(Qt::AlignLeading);
-  ssl_form_layout->addRow("enable SSL", ssl_verify_check);
-  ssl_form_layout->addRow("verify hostname", ssl_verify_hostname_check);
-  ssl_form_layout->addRow("certificate path", ssl_cert_path_le);
-  ssl_form_layout->addRow("cipher", ssl_cipher_le);
-  ssl_form_layout->addRow("server name indication", ssl_server_name_indication_le);
-  ssl_form_layout->addRow("ALPN", ssl_alpn_le);
-  ssl_form_layout->addRow("reuse session", ssl_reuse_session_check);
-  ssl_form_layout->addRow("curve", ssl_curves_le);
-  ssl_form_layout->addRow("signature algorithm", ssl_sig_algorithm_le);
+  ssl_form_layout->insertRow(0, "enable SSL", ssl_verify_check);
+  ssl_form_layout->insertRow(1, "verify hostname", ssl_verify_hostname_check);
+  ssl_form_layout->insertRow(2, "certificate path", ssl_cert_path_le);
+  ssl_form_layout->insertRow(3, "cipher", ssl_cipher_le);
+  ssl_form_layout->insertRow(4, "server name indication", ssl_server_name_indication_le);
+  ssl_form_layout->insertRow(5, "ALPN", ssl_alpn_le);
+  ssl_form_layout->insertRow(6, "reuse session", ssl_reuse_session_check);
+  ssl_form_layout->insertRow(7, "curve", ssl_curves_le);
+  ssl_form_layout->insertRow(8, "signature algorithm", ssl_sig_algorithm_le);
 
   QLabel *tcp_label = new QLabel("TCP Options", this);
-  QFormLayout *tcp_form_layout = new QFormLayout();
+  tcp_form_layout = new QFormLayout();
   tcp_form_layout->setLabelAlignment(Qt::AlignLeading);
-  tcp_form_layout->addRow("keep alive", tcp_keep_alive_check);
-  tcp_form_layout->addRow("no delay", tcp_no_delay_check);
-  tcp_form_layout->addRow("fast open", tcp_fast_open_check);
-  tcp_form_layout->addRow("fast open queue length", tcp_fast_open_queue_length_box);
+  tcp_form_layout->insertRow(0, "keep alive", tcp_keep_alive_check);
+  tcp_form_layout->insertRow(1, "no delay", tcp_no_delay_check);
+  tcp_form_layout->insertRow(2, "fast open", tcp_fast_open_check);
+  tcp_form_layout->insertRow(3, "fast open queue length", tcp_fast_open_queue_length_box);
 
   QVBoxLayout *main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignLeading);
@@ -96,5 +97,22 @@ ConfigEditor::ConfigEditor(QWidget *parent)
   palette.setColor(QPalette::Window, QColor(250,250,250));
   this->setPalette(palette);
   this->setAutoFillBackground(true);
-//  this->setMinimumSize(QSize(800,1));
+
+  this->switchMode(Config::RunType::CLIENT);
+}
+
+void ConfigEditor::switchMode(const Config::RunType &t)
+{
+  if(t == Config::SERVER)
+    {
+      //! Layout Bug Here
+      general_form_layout->insertRow(5, "append payload", append_payload_check);
+      append_payload_check->setHidden(false);
+    }
+  else
+    {
+      general_form_layout->takeRow(5);
+      append_payload_check->setHidden(true);
+    }
+
 }

@@ -1,6 +1,8 @@
 #ifndef CONFIGEDITOR_H
 #define CONFIGEDITOR_H
 
+#include "trojan/src/config.h"
+
 #include <QLabel>
 #include <QLineEdit>
 #include <QCheckBox>
@@ -8,15 +10,15 @@
 #include <QFormLayout>
 #include <QSpinBox>
 
+
 class ConfigEditor : public QWidget
 {
   Q_OBJECT
 public:
   explicit ConfigEditor(QWidget *parent = nullptr);
 
-signals:
-
 public slots:
+  void switchMode(const Config::RunType &t);
 
 private:
   QLineEdit *local_addr_le;
@@ -43,6 +45,10 @@ private:
   QCheckBox *tcp_no_delay_check;
   QCheckBox *tcp_fast_open_check;
   QSpinBox *tcp_fast_open_queue_length_box;
+
+  QFormLayout *general_form_layout;
+  QFormLayout *ssl_form_layout;
+  QFormLayout *tcp_form_layout;
 
 };
 

@@ -27,6 +27,7 @@ Window::Window(QWidget *parent)
   , tray_menu(new QMenu(this))
   , tray_icon(new QSystemTrayIcon(this))
   , main_layout(new QHBoxLayout(this))
+  , config_editor(new ConfigEditor(this))
   , body_widget(new BodyWidget(this))
   , stacked_widget(new QStackedWidget(this))
 {
@@ -41,8 +42,7 @@ Window::Window(QWidget *parent)
   tray_icon->setVisible(true);
   tray_icon->show();
 
-  ConfigEditor *e = new ConfigEditor(this);
-  stacked_widget->addWidget(e);
+  stacked_widget->addWidget(config_editor);
   stacked_widget->setContentsMargins(0,0,0,0);
   scroll_area = new QScrollArea(this);
   scroll_area->setWidgetResizable(true);
@@ -67,29 +67,33 @@ Window::Window(QWidget *parent)
   connect(show_action, &QAction::triggered, [this](){this->show();this->raise();});
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
   connect(tray_icon, &QSystemTrayIcon::activated, [this](){this->show();this->raise();});
-  connect(body_widget->start_button, &Button::clicked, this, &Window::onStartButtonClicked);
   connect(body_widget->server_rbutton, &QRadioButton::toggled, this, &Window::onModeSwitched);
+  connect(body_widget->start_button, &Button::clicked, this, &Window::onStartButtonClicked);
   connect(body_widget->config_button, &Button::clicked, [this](){
           if(isEditing)
             {
               scroll_area->setHidden(true);
-              body_widget->config_button->setText("Edit Config");
+              body_widget->config_button->setText("Config");
               body_widget->config_button->setTheme(Button::Gray);
+              body_widget->start_button->setTheme(Button::Blue);
+              body_widget->start_button->setEnabled(false);
               isEditing = !isEditing;
             }
           else
             {
               scroll_area->setHidden(false);
-              body_widget->config_button->setText("Save Config");
-              body_widget->config_button->setTheme(Button::Amber);
+              body_widget->config_button->setText("Save");
+              body_widget->config_button->setTheme(Button::Blue);
+              body_widget->start_button->setTheme(Button::Gray);
+              body_widget->start_button->setEnabled(false);
               isEditing = !isEditing;
             }
     });
 
-  QFont font;
-  font.setFamily("Verdana");
-  font.setPixelSize(14);
-  this->setFont(font);
+//  QFont font;
+//  font.setFamily("Verdana");
+//  font.setPixelSize(14);
+//  this->setFont(font);
 
   QPalette palette(this->palette());
   palette.setColor(QPalette::Window, Qt::white);
@@ -120,9 +124,9 @@ void Window::onServerStarted(const bool &sucess)
 
 void Window::onStartButtonClicked()
 {
-  body_widget->setEnabled(false);/*
-  body_widget->start_button->setEnabled(false);
-  body_widget->config_button->setEnabled(false);*/
+  body_widget->setEnabled(false);
+//  body_widget->start_button->setEnabled(false);
+//  body_widget->config_button->setEnabled(false);
   body_widget->setStartButtonState(BodyWidget::Disabled);
   emit startTriggered();
 }
@@ -132,12 +136,12 @@ void Window::onModeSwitched(bool checked)
 {
   if(checked)
     {
-      emit modeSwiched(Config::SERVER);
+      config_editor->switchMode(Config::SERVER);
       qDebug()<<"server mode";
     }
   else
     {
-      emit modeSwiched(Config::CLIENT);
+      config_editor->switchMode(Config::CLIENT);
       qDebug()<<"client mode";
     }
 }

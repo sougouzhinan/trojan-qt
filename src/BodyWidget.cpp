@@ -7,7 +7,7 @@ BodyWidget::BodyWidget(QWidget *parent)
   , server_rbutton(new QRadioButton("Server", this))
   , client_rbutton(new QRadioButton("Client", this))
   , start_button(new Button("Start", this))
-  , config_button(new Button("Edit Config", this))
+  , config_button(new Button("Config", this))
   , settings_button(new IconButton(this))
 {
   QPixmap logoPixmap(":/img/img/logo.png");
@@ -51,7 +51,6 @@ BodyWidget::BodyWidget(QWidget *parent)
   mainLayout->addWidget(settings_button);
 
   QPalette palette(this->palette());
-//  palette.setColor(QPalette::Window, QColor(255,255,250));
   palette.setColor(QPalette::Window, QColor(255,255,255));
   this->setAutoFillBackground(true);
   this->setPalette(palette);
