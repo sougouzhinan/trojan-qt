@@ -18,7 +18,8 @@ SOURCES += \
     main.cpp \
     widget.cpp \
     trojanthread.cpp \
-    configdialog.cpp
+    configdialog.cpp \
+    pathutils.cpp
 
 HEADERS += \
     trojan/src/authenticator.h \
@@ -35,7 +36,8 @@ HEADERS += \
     trojan/src/version.h \
     widget.h \
     trojanthread.h \
-    configdialog.h
+    configdialog.h \
+    pathutils.h
 
 FORMS += \
     widget.ui \

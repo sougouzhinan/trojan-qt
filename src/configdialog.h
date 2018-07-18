@@ -11,9 +11,12 @@ class ConfigDialog : public QDialog {
     Q_OBJECT
 public:
     explicit ConfigDialog(QWidget *parent = 0);
+    void setDefaultConfig();
     ~ConfigDialog();
 private:
     Ui::ConfigDialog *ui;
+private slots:
+    void certificatePathButtonClicked();
 };
 
 #endif // CONFIGDIALOG_H

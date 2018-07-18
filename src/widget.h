@@ -2,7 +2,9 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QStringListModel>
 #include "trojanthread.h"
+#include "configdialog.h"
 
 namespace Ui {
     class Widget;
@@ -16,6 +18,18 @@ public:
 private:
     Ui::Widget *ui;
     TrojanThread trojan;
+    ConfigDialog configDialog;
+    QStringListModel configListModel;
+    void refreshConfigList();
+    QString selectedConfig();
+private slots:
+    void addButtonClicked();
+    void deleteButtonClicked();
+    void refreshButtonClicked();
+    void openFolderButtonClicked();
+    void startButtonClicked();
+    void trojanStarted();
+    void trojanFailed(QString errorMessage);
 };
 
 #endif // WIDGET_H
