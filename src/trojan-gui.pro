@@ -17,7 +17,8 @@ SOURCES += \
     trojan/src/version.cpp \
     main.cpp \
     widget.cpp \
-    trojanthread.cpp
+    trojanthread.cpp \
+    configdialog.cpp
 
 HEADERS += \
     trojan/src/authenticator.h \
@@ -33,10 +34,12 @@ HEADERS += \
     trojan/src/udppacket.h \
     trojan/src/version.h \
     widget.h \
-    trojanthread.h
+    trojanthread.h \
+    configdialog.h
 
 FORMS += \
-    widget.ui
+    widget.ui \
+    configdialog.ui
 
 unix {
     INCLUDEPATH += /usr/include/mysql
