@@ -2,6 +2,8 @@
 #define CONFIGDIALOG_H
 
 #include <QDialog>
+#include <QString>
+#include <QByteArray>
 
 namespace Ui {
     class ConfigDialog;
@@ -15,6 +17,7 @@ public:
     ~ConfigDialog();
 private:
     Ui::ConfigDialog *ui;
+    const static QByteArray defaultConfig;
 private slots:
     void certificatePathButtonClicked();
     void accept();

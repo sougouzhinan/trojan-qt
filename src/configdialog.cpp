@@ -2,7 +2,46 @@
 #include "ui_configdialog.h"
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QLineEdit>
+#include <QCheckBox>
 #include "pathutils.h"
+
+const QByteArray ConfigDialog::defaultConfig(
+    "{"
+    "    \"run_type\": \"client\","
+    "    \"local_addr\": \"127.0.0.1\","
+    "    \"local_port\": 1080,"
+    "    \"remote_addr\": \"example.com\","
+    "    \"remote_port\": 443,"
+    "    \"password\": [\"password1\"],"
+    "    \"append_payload\": true,"
+    "    \"log_level\": 1,"
+    "    \"ssl\": {"
+    "        \"verify\": true,"
+    "        \"verify_hostname\": true,"
+    "        \"cert\": \"\","
+    "        \"cipher\": \"ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:AES128-SHA:AES256-SHA:DES-CBC3-SHA\","
+    "        \"sni\": \"example.com\","
+    "        \"alpn\": ["
+    "            \"h2\","
+    "            \"http/1.1\""
+    "        ],"
+    "        \"reuse_session\": true,"
+    "        \"curves\": \"\","
+    "        \"sigalgs\": \"\""
+    "    },"
+    "    \"tcp\": {"
+    "        \"keep_alive\": true,"
+    "        \"no_delay\": true,"
+    "        \"fast_open\": true,"
+    "        \"fast_open_qlen\": 5"
+    "    }"
+    "}"
+);
 
 ConfigDialog::ConfigDialog(QWidget *parent) :
     QDialog(parent),
@@ -52,7 +91,19 @@ void ConfigDialog::accept() {
         ui->localPort->setFocus();
         return;
     }
-    if (PathUtils::addConfig(ui->name->text(), "")) {
+    QJsonObject config(QJsonDocument::fromJson(defaultConfig).object());
+    config.find("remote_addr").value() = ui->remoteAddress->text();
+    config.find("remote_port").value() = remotePort;
+    config.find("local_port").value() = localPort;
+    QJsonArray password;
+    password.append(ui->password->text());
+    config.find("password").value() = password;
+    QJsonObject ssl = config.find("ssl").value().toObject();
+    ssl.find("verify_hostname").value() = ui->verifyHostname->isChecked();
+    ssl.find("cert").value() = ui->certificatePath->text();
+    ssl.find("sni").value() = ui->sni->text();
+    config.find("ssl").value() = ssl;
+    if (PathUtils::addConfig(ui->name->text(), QJsonDocument(config).toJson())) {
         emit accepted();
         hide();
     } else {
