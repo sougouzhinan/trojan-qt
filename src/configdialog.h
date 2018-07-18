@@ -17,6 +17,7 @@ private:
     Ui::ConfigDialog *ui;
 private slots:
     void certificatePathButtonClicked();
+    void accept();
 };
 
 #endif // CONFIGDIALOG_H
