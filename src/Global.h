@@ -2,8 +2,11 @@
 #define GLOBAL_H
 
 #include "trojan/src/config.h"
-#include "QString"
-#include "QMessageBox"
+
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QString>
+#include <QMessageBox>
 
 class Global
 {
@@ -17,6 +20,8 @@ public:
       OFF = 5
   };
 
+  static QJsonObject client_config_obj;
+  static QJsonObject server_config_obj;
   static QString client_config_path;
   static QString server_config_path;
   static Config::RunType current_run_type;

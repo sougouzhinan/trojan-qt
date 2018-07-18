@@ -39,6 +39,7 @@ unix{
     LIBS += -L/usr/local/lib -lpthread
     LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto
     LIBS += -L/usr/local/opt/boost/lib -lboost_system
+    LIBS += -lmysqlclient
 
 #    The right way to do it with pkg-config, but it points to the deprecated system OpenSSL.
 #    CONFIG += link_pkgconfig
@@ -92,8 +93,3 @@ HEADERS += \
 RESOURCES += \
     img.qrc \
     file.qrc
-
-
-
-
-

@@ -27,7 +27,8 @@ Window::Window(QWidget *parent)
   , tray_menu(new QMenu(this))
   , tray_icon(new QSystemTrayIcon(this))
   , main_layout(new QHBoxLayout(this))
-  , config_editor(new ConfigEditor(this))
+  , config_editor_server(new ConfigEditor(Config::SERVER, this))
+  , config_editor_client(new ConfigEditor(Config::CLIENT, this))
   , body_widget(new BodyWidget(this))
   , stacked_widget(new QStackedWidget(this))
 {
@@ -42,7 +43,8 @@ Window::Window(QWidget *parent)
   tray_icon->setVisible(true);
   tray_icon->show();
 
-  stacked_widget->addWidget(config_editor);
+  stacked_widget->addWidget(config_editor_server);
+  stacked_widget->addWidget(config_editor_client);
   stacked_widget->setContentsMargins(0,0,0,0);
   scroll_area = new QScrollArea(this);
   scroll_area->setWidgetResizable(true);
@@ -67,7 +69,7 @@ Window::Window(QWidget *parent)
   connect(show_action, &QAction::triggered, [this](){this->show();this->raise();});
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
   connect(tray_icon, &QSystemTrayIcon::activated, [this](){this->show();this->raise();});
-  connect(body_widget->server_rbutton, &QRadioButton::toggled, this, &Window::onModeSwitched);
+  connect(body_widget->server_rbutton, &QRadioButton::toggled, this, &Window::onRadioButtonToggled);
   connect(body_widget->start_button, &Button::clicked, this, &Window::onStartButtonClicked);
   connect(body_widget->config_button, &Button::clicked, [this](){
           if(isEditing)
@@ -90,11 +92,6 @@ Window::Window(QWidget *parent)
             }
     });
 
-//  QFont font;
-//  font.setFamily("Verdana");
-//  font.setPixelSize(14);
-//  this->setFont(font);
-
   QPalette palette(this->palette());
   palette.setColor(QPalette::Window, Qt::white);
   this->setPalette(palette);
@@ -106,6 +103,22 @@ Window::Window(QWidget *parent)
 #endif
 
 
+}
+
+void Window::setCurrentMode(const Config::RunType &t)
+{
+  switch (t) {
+    case Config::RunType::CLIENT:
+      {
+        body_widget->client_rbutton->toggle();
+        break;
+      }
+    case Config::RunType::SERVER:
+      {
+        body_widget->server_rbutton->toggle();
+        break;
+      }
+    }
 }
 
 void Window::onServerStarted(const bool &sucess)
@@ -125,23 +138,25 @@ void Window::onServerStarted(const bool &sucess)
 void Window::onStartButtonClicked()
 {
   body_widget->setEnabled(false);
-//  body_widget->start_button->setEnabled(false);
-//  body_widget->config_button->setEnabled(false);
+  body_widget->start_button->setEnabled(false);
+  body_widget->config_button->setEnabled(false);
   body_widget->setStartButtonState(BodyWidget::Disabled);
   emit startTriggered();
 }
 
 
-void Window::onModeSwitched(bool checked)
+void Window::onRadioButtonToggled(bool serverMode)
 {
-  if(checked)
+  if(serverMode)
     {
-      config_editor->switchMode(Config::SERVER);
-      qDebug()<<"server mode";
+      stacked_widget->setCurrentWidget(config_editor_server);
+      Global::current_run_type = Config::RunType::SERVER;
+      Log::log_with_date_time("Switched to server mode", Log::INFO);
     }
   else
     {
-      config_editor->switchMode(Config::CLIENT);
-      qDebug()<<"client mode";
+      stacked_widget->setCurrentWidget(config_editor_client);
+      Global::current_run_type = Config::RunType::CLIENT;
+      Log::log_with_date_time("Switched to client mode", Log::INFO);
     }
 }

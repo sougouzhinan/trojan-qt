@@ -23,7 +23,7 @@
 #define APP_DATA_DIR QStandardPaths::writableLocation(QStandardPaths::DataLocation)
 #define SERVER_CONFIG_PATH APP_DATA_DIR + "/client.json"
 #define CLIENT_CONFIG_PATH APP_DATA_DIR + "/server.json"
-#define TROJAN_CONFIG_PATH APP_DATA_DIR + "/settings.json"
+#define APP_CONFIG_PATH APP_DATA_DIR + "/settings.json"
 
 #include <QApplication>
 #include <QStandardPaths>
@@ -58,9 +58,12 @@ public:
 
 private:
   ServiceThread *service;
-  bool loadSettings();
+  bool loadAppConfig();
+  bool writeAppConfig();
+  bool loadTrojanConfig();
+  bool loadJson(const QString &file, QJsonObject &obj);
   bool checkDir(const QString &dir);
-  bool checkFile(const QString &path, const QString &populateDir);
+  bool checkFile(const QString &path, const QString &copy);
 
 private slots:
   void startTrojan();

@@ -1,5 +1,7 @@
 #include "Global.h"
 
+QJsonObject Global::client_config_obj;
+QJsonObject Global::server_config_obj;
 QString Global::client_config_path;
 QString Global::server_config_path;
 Config::RunType Global::current_run_type;

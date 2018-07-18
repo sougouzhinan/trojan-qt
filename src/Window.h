@@ -45,6 +45,7 @@ signals:
   void startTriggered();
 
 public slots:
+  void setCurrentMode(const Config::RunType &t);
   void onServerStarted(const bool &sucess);
 
 private:
@@ -56,15 +57,16 @@ private:
 
   QHBoxLayout *main_layout;
   BodyWidget *body_widget;
-  ConfigEditor *config_editor;
+  ConfigEditor *config_editor_server;
+  ConfigEditor *config_editor_client;
   QScrollArea *scroll_area;
   QStackedWidget *stacked_widget;
 
   bool isEditing = false;
 
 private slots:
+  void onRadioButtonToggled(bool serverMode);
   void onStartButtonClicked();
-  void onModeSwitched(bool checked);
 };
 
 #endif // WINDOW_H
