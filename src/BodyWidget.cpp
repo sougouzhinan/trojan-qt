@@ -2,13 +2,13 @@
 
 BodyWidget::BodyWidget(QWidget *parent)
   : QWidget(parent)
-  , logo_label(new QLabel(this))
-  , mode_label(new QLabel("Mode:  ", this))
-  , server_rbutton(new QRadioButton("Server", this))
-  , client_rbutton(new QRadioButton("Client", this))
   , start_button(new Button("Start", this))
   , config_button(new Button("Config", this))
   , settings_button(new IconButton(this))
+  , server_rbutton(new QRadioButton("Server", this))
+  , client_rbutton(new QRadioButton("Client", this))
+  , logo_label(new QLabel(this))
+  , mode_label(new QLabel("Mode:  ", this))
 {
   QPixmap logoPixmap(":/img/img/logo.png");
   logoPixmap.setDevicePixelRatio(2.0);

@@ -41,7 +41,6 @@ public:
   explicit Window(QWidget *parent = nullptr);
 
 signals:
-  void modeSwiched(const Config::RunType &t);
   void startTriggered();
 
 public slots:
@@ -49,16 +48,16 @@ public slots:
   void onServerStarted(const bool &sucess);
 
 private:
-  QMenu *tray_menu;
   QAction *hide_action;
   QAction *show_action;
   QAction *quit_action;
+  QMenu *tray_menu;
   QSystemTrayIcon *tray_icon;
 
   QHBoxLayout *main_layout;
-  BodyWidget *body_widget;
   ConfigEditor *config_editor_server;
   ConfigEditor *config_editor_client;
+  BodyWidget *body_widget;
   QScrollArea *scroll_area;
   QStackedWidget *stacked_widget;
 
@@ -67,6 +66,7 @@ private:
 private slots:
   void onRadioButtonToggled(bool serverMode);
   void onStartButtonClicked();
+  void onConfigButtonClicked();
 };
 
 #endif // WINDOW_H

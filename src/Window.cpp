@@ -46,6 +46,7 @@ Window::Window(QWidget *parent)
   stacked_widget->addWidget(config_editor_server);
   stacked_widget->addWidget(config_editor_client);
   stacked_widget->setContentsMargins(0,0,0,0);
+
   scroll_area = new QScrollArea(this);
   scroll_area->setWidgetResizable(true);
   scroll_area->setWidget(stacked_widget);
@@ -65,33 +66,6 @@ Window::Window(QWidget *parent)
   main_layout->addWidget(scroll_area);
   main_layout->setSizeConstraint(QLayout::SetFixedSize);
 
-  connect(hide_action, &QAction::triggered, this, &QWidget::hide);
-  connect(show_action, &QAction::triggered, [this](){this->show();this->raise();});
-  connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
-  connect(tray_icon, &QSystemTrayIcon::activated, [this](){this->show();this->raise();});
-  connect(body_widget->server_rbutton, &QRadioButton::toggled, this, &Window::onRadioButtonToggled);
-  connect(body_widget->start_button, &Button::clicked, this, &Window::onStartButtonClicked);
-  connect(body_widget->config_button, &Button::clicked, [this](){
-          if(isEditing)
-            {
-              scroll_area->setHidden(true);
-              body_widget->config_button->setText("Config");
-              body_widget->config_button->setTheme(Button::Gray);
-              body_widget->start_button->setTheme(Button::Blue);
-              body_widget->start_button->setEnabled(false);
-              isEditing = !isEditing;
-            }
-          else
-            {
-              scroll_area->setHidden(false);
-              body_widget->config_button->setText("Save");
-              body_widget->config_button->setTheme(Button::Blue);
-              body_widget->start_button->setTheme(Button::Gray);
-              body_widget->start_button->setEnabled(false);
-              isEditing = !isEditing;
-            }
-    });
-
   QPalette palette(this->palette());
   palette.setColor(QPalette::Window, Qt::white);
   this->setPalette(palette);
@@ -102,7 +76,13 @@ Window::Window(QWidget *parent)
   this->setWindowIcon(QIcon(":/img/img/logo.png"));
 #endif
 
-
+  connect(hide_action, &QAction::triggered, this, &QWidget::hide);
+  connect(show_action, &QAction::triggered, [this](){this->show();this->raise();});
+  connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
+  connect(tray_icon, &QSystemTrayIcon::activated, [this](){this->show();this->raise();});
+  connect(body_widget->server_rbutton, &QRadioButton::toggled, this, &Window::onRadioButtonToggled);
+  connect(body_widget->start_button, &Button::clicked, this, &Window::onStartButtonClicked);
+  connect(body_widget->config_button, &Button::clicked, this, &Window::onConfigButtonClicked);
 }
 
 void Window::setCurrentMode(const Config::RunType &t)
@@ -144,19 +124,49 @@ void Window::onStartButtonClicked()
   emit startTriggered();
 }
 
+void Window::onConfigButtonClicked()
+{
+  if(isEditing)
+    {
+      Log::log_with_date_time("Saving config...", Log::INFO);
+
+      AppManager::writeTrojanConfig();
+
+      scroll_area->setHidden(true);
+      body_widget->config_button->setText("Config");
+      body_widget->config_button->setTheme(Button::Gray);
+      body_widget->start_button->setTheme(Button::Blue);
+      body_widget->start_button->setEnabled(false);
+      isEditing = false;
+    }
+  else
+    {
+      Log::log_with_date_time("Editing config...", Log::INFO);
+
+      AppManager::loadTrojanConfig();
+
+      scroll_area->setHidden(false);
+      body_widget->config_button->setText("Save");
+      body_widget->config_button->setTheme(Button::Blue);
+      body_widget->start_button->setTheme(Button::Gray);
+      body_widget->start_button->setEnabled(false);
+      isEditing = true;
+    }
+}
+
 
 void Window::onRadioButtonToggled(bool serverMode)
 {
   if(serverMode)
     {
       stacked_widget->setCurrentWidget(config_editor_server);
-      Global::current_run_type = Config::RunType::SERVER;
+      AppManager::current_run_type = Config::RunType::SERVER;
       Log::log_with_date_time("Switched to server mode", Log::INFO);
     }
   else
     {
       stacked_widget->setCurrentWidget(config_editor_client);
-      Global::current_run_type = Config::RunType::CLIENT;
+      AppManager::current_run_type = Config::RunType::CLIENT;
       Log::log_with_date_time("Switched to client mode", Log::INFO);
     }
 }

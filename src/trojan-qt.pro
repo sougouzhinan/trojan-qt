@@ -30,23 +30,24 @@ mac{
     QMAKE_LFLAGS += -framework IOKit -framework Cocoa -framework Security
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
     LIBS += -framework Security
+    INCLUDEPATH += /usr/local/include/
 }
 
 unix{
-    INCLUDEPATH += /usr/local/include/
     INCLUDEPATH += /usr/local/opt/openssl/include/
     INCLUDEPATH += /usr/local/opt/boost/include/
+    INCLUDEPATH += /usr/include/mysql
     LIBS += -L/usr/local/lib -lpthread
     LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto
     LIBS += -L/usr/local/opt/boost/lib -lboost_system
     LIBS += -lmysqlclient
 
 #    The right way to do it with pkg-config, but it points to the deprecated system OpenSSL.
-#    CONFIG += link_pkgconfig
 #    PKGCONFIG += openssl
 }
 
 SOURCES += \
+    trojan/src/authenticator.cpp \
     trojan/src/clientsession.cpp \
     trojan/src/config.cpp \
     trojan/src/log.cpp \
@@ -66,10 +67,11 @@ SOURCES += \
     BodyWidget.cpp \
     StackedWidget.cpp \
     ServiceThread.cpp \
-    Global.cpp \
-    ConfigEditor.cpp
+    ConfigEditor.cpp \
+    AppManager.cpp
 
 HEADERS += \
+    trojan/src/authenticator.h \
     trojan/src/clientsession.h \
     trojan/src/config.h \
     trojan/src/log.h \
@@ -87,8 +89,8 @@ HEADERS += \
     BodyWidget.h \
     StackedWidget.h \
     ServiceThread.h \
-    Global.h \
-    ConfigEditor.h
+    ConfigEditor.h \
+    AppManager.h
 
 RESOURCES += \
     img.qrc \

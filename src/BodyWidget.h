@@ -12,7 +12,7 @@
 
 #include "Version.h"
 #include "IconButton.h"
-#include "Global.h"
+#include "AppManager.h"
 
 
 class BodyWidget : public QWidget
