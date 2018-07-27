@@ -24,10 +24,7 @@ App::App(int &argc, char **argv)
   , window(new Window())
   , service(new ServiceThread(this))
 {
-
-#ifdef Q_OS_OSX
   QApplication::setQuitOnLastWindowClosed(false);
-#endif
 
   AppManager::checkDir(APP_DATA_DIR);
   AppManager::checkFile(APP_CONFIG_PATH, ":/file/file/settings.json");

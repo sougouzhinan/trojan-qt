@@ -130,6 +130,8 @@ void Window::onConfigButtonClicked()
     {
       Log::log_with_date_time("Saving config...", Log::INFO);
 
+      AppManager::client_config_obj = config_editor_client->getJson();
+      AppManager::server_config_obj = config_editor_server->getJson();
       AppManager::writeTrojanConfig();
 
       scroll_area->setHidden(true);
@@ -162,11 +164,13 @@ void Window::onRadioButtonToggled(bool serverMode)
       stacked_widget->setCurrentWidget(config_editor_server);
       AppManager::current_run_type = Config::RunType::SERVER;
       Log::log_with_date_time("Switched to server mode", Log::INFO);
+      qDebug()<<"ser";
     }
   else
     {
       stacked_widget->setCurrentWidget(config_editor_client);
       AppManager::current_run_type = Config::RunType::CLIENT;
       Log::log_with_date_time("Switched to client mode", Log::INFO);
+      qDebug()<<"cli";
     }
 }

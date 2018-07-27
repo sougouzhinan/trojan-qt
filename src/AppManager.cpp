@@ -4,7 +4,7 @@ QJsonObject AppManager::client_config_obj;
 QJsonObject AppManager::server_config_obj;
 QString AppManager::client_config_path;
 QString AppManager::server_config_path;
-Config::RunType AppManager::current_run_type;
+Config::RunType AppManager::current_run_type = Config::CLIENT;
 
 bool AppManager::checkDir(const QString &dir)
 {

@@ -9,7 +9,8 @@
 #include <QComboBox>
 #include <QFormLayout>
 #include <QSpinBox>
-
+#include <QJsonObject>
+#include <QJsonArray>
 
 class ConfigEditor : public QWidget
 {
@@ -17,6 +18,8 @@ class ConfigEditor : public QWidget
 public:
   explicit ConfigEditor(const Config::RunType &t, QWidget *parent = nullptr);
   Config::RunType getConfigType();
+
+  QJsonObject getJson();
 
 public slots:
 
