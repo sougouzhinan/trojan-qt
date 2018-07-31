@@ -8,10 +8,10 @@
 
 Todo | Comment
 ------- | -------
-Main Interface | Almost finished
-Configuration Editor | Almost finished
+Main Interface | Done 
+Configuration Editor | Done 
 Settings Interface | Haven't Started
-App Data Files Management | Almost finished
+App Data Files Management | Done 
 Connection to Trojan | Done
 
 ## Documentation
