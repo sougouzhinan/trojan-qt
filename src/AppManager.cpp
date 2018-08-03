@@ -176,6 +176,7 @@ bool AppManager::loadTrojanConfig()
           return false;
         }
     }
+  qDebug()<<AppManager::client_config_obj;
 
   if(!AppManager::loadJson(AppManager::server_config_path, AppManager::server_config_obj))
     {

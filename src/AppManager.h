@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
+#include <QDebug>
 
 #define APP_DATA_DIR QStandardPaths::writableLocation(QStandardPaths::DataLocation)
 #define SERVER_CONFIG_PATH APP_DATA_DIR + "/client.json"

@@ -34,7 +34,7 @@ App::App(int &argc, char **argv)
   connect(service, &ServiceThread::exception, this, &App::popErrorBox);
   connect(service, &ServiceThread::started, window, &Window::onServerStarted);
   connect(window, &Window::startTriggered, this, &App::startTrojan);
-
+  qDebug()<<"setting from disk" << AppManager::current_run_type;
   window->setCurrentMode(AppManager::current_run_type);
 }
 

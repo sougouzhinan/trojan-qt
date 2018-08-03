@@ -46,6 +46,7 @@ signals:
 public slots:
   void setCurrentMode(const Config::RunType &t);
   void onServerStarted(const bool &sucess);
+  void onRadioButtonToggled(bool serverMode);
 
 private:
   QAction *hide_action;
@@ -64,7 +65,6 @@ private:
   bool isEditing = false;
 
 private slots:
-  void onRadioButtonToggled(bool serverMode);
   void onStartButtonClicked();
   void onConfigButtonClicked();
 };

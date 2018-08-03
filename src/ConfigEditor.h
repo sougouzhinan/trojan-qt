@@ -20,6 +20,7 @@ public:
   Config::RunType getConfigType();
 
   QJsonObject getJson();
+  void setJson(QJsonObject &obj);
 
 public slots:
 

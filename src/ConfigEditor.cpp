@@ -218,3 +218,56 @@ QJsonObject ConfigEditor::getJson()
   return r;
 }
 
+void ConfigEditor::setJson(QJsonObject &obj)
+{
+  local_addr_le->setText(obj["local_addr"].toString());
+  local_port_le->setText(obj["local_port"].toString());
+  remote_addr_le->setText(obj["remote_addr"].toString());
+  remote_port_le->setText(obj["remote_port"].toString());
+  log_level_combo->setCurrentIndex(obj["log_level"].toInt());
+
+  QString pswdStr = "";
+  for(QJsonValue v : obj["password"].toArray())
+    pswdStr.append(v.toString() + ",");
+  passwd_le->setText(pswdStr.left(pswdStr.size() - 1));
+
+  QJsonObject sslObj = obj["ssl"].toObject();
+  ssl_cert_path_le->setText(sslObj["cert"].toString());
+  ssl_cipher_le->setText(sslObj["cipher"].toString());
+  ssl_reuse_session_check->setChecked(sslObj["reuse_session"].toBool());
+  ssl_curves_le->setText(sslObj["curves"].toString());
+  ssl_sig_algorithm_le->setText(sslObj["sigalgs"].toString());
+
+  QString alpnStr = "";
+  for(QJsonValue v : sslObj["alpn"].toArray())
+    alpnStr.append(v.toString() + ",");
+  ssl_alpn_le->setText(alpnStr.left(alpnStr.size() - 1));
+
+  QJsonObject tcpObj = obj["tcp"].toObject();
+  tcp_keep_alive_check->setChecked(tcpObj["keep_alive"].toBool());
+  tcp_no_delay_check->setChecked(tcpObj["no_delay"].toBool());
+  tcp_fast_open_check->setChecked(tcpObj["fast_open"].toBool());
+  tcp_fast_open_queue_length_box->setValue(tcpObj["fast_open_qlen"].toInt());
+
+  switch (run_type) {
+    case Config::RunType::CLIENT:
+      {
+
+        append_payload_check->setChecked(obj["append_payload"].toBool());
+        ssl_verify_check->setChecked(sslObj["verify"].toBool());
+        ssl_verify_hostname_check->setChecked(sslObj["verify_hostname"].toBool());
+        ssl_server_name_indication_le->setText(sslObj["sni"].toString());
+        break;
+      }
+    case Config::RunType::SERVER:
+      {
+        ssl_private_key_path_le->setText(sslObj["key"].toString());
+        ssl_private_key_password_le->setText(sslObj["key_password"].toString());
+        ssl_prefer_server_cipher_check->setChecked(sslObj["prefer_server_cipher"].toBool());
+        ssl_session_timeout_box->setValue(sslObj["session_timeout"].toInt());
+        ssl_dh_parameters_path_le->setText(sslObj["dhparam"].toString());
+        break;
+      }
+    }
+}
+

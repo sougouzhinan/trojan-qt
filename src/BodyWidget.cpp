@@ -73,8 +73,6 @@ void BodyWidget::setStartButtonState(BodyWidget::StartButtonState state)
       start_button->setTheme(Button::Amber);
       start_button->setText("Stop");
       break;
-    default:
-      break;
     }
 }
 

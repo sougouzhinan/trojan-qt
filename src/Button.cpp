@@ -83,8 +83,6 @@ void Button::setColor(const Button::ColorOption &palette, const QColor &color)
         fg_hovered_color = color;
         break;
       }
-    default:
-      break;
     }
 }
 
@@ -123,8 +121,6 @@ void Button::setTheme(const Button::Theme &theme)
         this->setColor(Button::BgHovered, QColor(255,255,255, 255));
         break;
       }
-    default:
-      break;
     }
 }
 
@@ -148,7 +144,7 @@ void Button::paintEvent(QPaintEvent *)
 
 void Button::resizeEvent(QResizeEvent *ev)
 {
-  bg_rect = QRect(1, (this->rect().height() - height) * 0.5 + 1, this->rect().width() - 1, height - 1);
+  bg_rect = QRect(1, int((this->rect().height() - height) * 0.5) + 1, this->rect().width() - 1, height - 1);
   QWidget::resizeEvent(ev);
 }
 

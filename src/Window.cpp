@@ -87,15 +87,21 @@ Window::Window(QWidget *parent)
 
 void Window::setCurrentMode(const Config::RunType &t)
 {
+  //! This function is only used onece in the constructor App().
+  //! By that time the Qt event loop is not running, because App inherits QApplication.
+  //! QApplication runs Qt event loop which will be started when exec() is called.
+
   switch (t) {
-    case Config::RunType::CLIENT:
+    case Config::CLIENT:
       {
-        body_widget->client_rbutton->toggle();
+        body_widget->client_rbutton->setChecked(true);
+        onRadioButtonToggled(false);
         break;
       }
-    case Config::RunType::SERVER:
+    case Config::SERVER:
       {
-        body_widget->server_rbutton->toggle();
+        body_widget->server_rbutton->setChecked(true);
+        onRadioButtonToggled(true);
         break;
       }
     }
@@ -163,14 +169,14 @@ void Window::onRadioButtonToggled(bool serverMode)
     {
       stacked_widget->setCurrentWidget(config_editor_server);
       AppManager::current_run_type = Config::RunType::SERVER;
+      config_editor_server->setJson(AppManager::server_config_obj);
       Log::log_with_date_time("Switched to server mode", Log::INFO);
-      qDebug()<<"ser";
     }
   else
     {
       stacked_widget->setCurrentWidget(config_editor_client);
       AppManager::current_run_type = Config::RunType::CLIENT;
+      config_editor_client->setJson(AppManager::client_config_obj);
       Log::log_with_date_time("Switched to client mode", Log::INFO);
-      qDebug()<<"cli";
     }
 }
