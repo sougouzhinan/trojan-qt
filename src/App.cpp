@@ -34,7 +34,8 @@ App::App(int &argc, char **argv)
   connect(service, &ServiceThread::exception, this, &App::popErrorBox);
   connect(service, &ServiceThread::started, window, &Window::onServerStarted);
   connect(window, &Window::startTriggered, this, &App::startTrojan);
-  qDebug()<<"setting from disk" << AppManager::current_run_type;
+  connect(window, &Window::stopTriggered, this, &App::stopTrojan);
+
   window->setCurrentMode(AppManager::current_run_type);
 }
 
@@ -51,9 +52,13 @@ void App::startTrojan()
   service->start();
 }
 
+void App::stopTrojan()
+{
+  service->stop();
+}
+
 void App::popErrorBox(const QString &what)
 {
   window->onServerStarted(false);
   AppManager::popMessageBox(AppManager::ERROR, what, window);
-
 }

@@ -29,7 +29,7 @@ BodyWidget::BodyWidget(QWidget *parent)
   mode_layout->addWidget(client_rbutton);
 
   start_button->setTheme(Button::Blue);
-  config_button->setTheme(Button::Gray);
+  config_button->setTheme(Button::Blue);
 
   settings_button->setDefaultPixmap(":/img/img/settings_default.png", 50);
   settings_button->setHoveredPixmap(":/img/img/settings_hovered.png", 50);

@@ -53,6 +53,7 @@ private:
 
 private slots:
   void startTrojan();
+  void stopTrojan();
   void popErrorBox(const QString &what);
 
 };

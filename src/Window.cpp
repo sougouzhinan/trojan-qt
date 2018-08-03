@@ -111,23 +111,37 @@ void Window::onServerStarted(const bool &sucess)
 {
   if(sucess)
     {
-      body_widget->setEnabled(true);
       body_widget->setStartButtonState(BodyWidget::Stop);
     }
   else
     {
-      body_widget->setEnabled(true);
       body_widget->setStartButtonState(BodyWidget::Start);
     }
 }
 
 void Window::onStartButtonClicked()
 {
-  body_widget->setEnabled(false);
-  body_widget->start_button->setEnabled(false);
-  body_widget->config_button->setEnabled(false);
-  body_widget->setStartButtonState(BodyWidget::Disabled);
-  emit startTriggered();
+  if(!isRunning)
+    {
+      body_widget->config_button->setEnabled(false);
+      body_widget->server_rbutton->setEnabled(false);
+      body_widget->client_rbutton->setEnabled(false);
+      body_widget->config_button->setTheme(Button::Gray);
+      body_widget->setStartButtonState(BodyWidget::Disabled);
+      isRunning = true;
+      emit startTriggered();
+    }
+  else
+    {
+      body_widget->config_button->setEnabled(true);
+      body_widget->server_rbutton->setEnabled(true);
+      body_widget->client_rbutton->setEnabled(true);
+      body_widget->config_button->setTheme(Button::Blue);
+      body_widget->setStartButtonState(BodyWidget::Start);
+      body_widget->setStartButtonState(BodyWidget::Start);
+      isRunning = false;
+      emit stopTriggered();
+    }
 }
 
 void Window::onConfigButtonClicked()
@@ -142,9 +156,9 @@ void Window::onConfigButtonClicked()
 
       scroll_area->setHidden(true);
       body_widget->config_button->setText("Config");
-      body_widget->config_button->setTheme(Button::Gray);
+      body_widget->config_button->setTheme(Button::Blue);
       body_widget->start_button->setTheme(Button::Blue);
-      body_widget->start_button->setEnabled(false);
+      body_widget->start_button->setEnabled(true);
       isEditing = false;
     }
   else

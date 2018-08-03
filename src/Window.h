@@ -42,6 +42,7 @@ public:
 
 signals:
   void startTriggered();
+  void stopTriggered();
 
 public slots:
   void setCurrentMode(const Config::RunType &t);
@@ -63,6 +64,7 @@ private:
   QStackedWidget *stacked_widget;
 
   bool isEditing = false;
+  bool isRunning = false;
 
 private slots:
   void onStartButtonClicked();
