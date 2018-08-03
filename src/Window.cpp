@@ -112,6 +112,10 @@ void Window::onServerStarted(const bool &sucess)
   if(sucess)
     {
       body_widget->setStartButtonState(BodyWidget::Stop);
+      if(AppManager::current_run_type == Config::CLIENT)
+        {
+          AppManager::setSystemProxy(true);
+        }
     }
   else
     {
@@ -141,6 +145,10 @@ void Window::onStartButtonClicked()
       body_widget->setStartButtonState(BodyWidget::Start);
       isRunning = false;
       emit stopTriggered();
+      if(AppManager::current_run_type == Config::CLIENT)
+        {
+          AppManager::setSystemProxy(false);
+        }
     }
 }
 
