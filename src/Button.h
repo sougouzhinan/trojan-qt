@@ -54,6 +54,7 @@ public:
 
   void setFont(const QFont &f);
   void setFont(const QString &family, const int &pixelSize);
+  void setFontSize(const int &pixelSize);
   void setText(const QString &str);
 
   void setColor(const ColorOption &palette, const QColor &color);
