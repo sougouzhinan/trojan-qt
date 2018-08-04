@@ -119,7 +119,10 @@ void Window::onServerStarted(const bool &sucess)
     }
   else
     {
-      body_widget->setStartButtonState(BodyWidget::Start);
+      //! Lazy tweak: Should do the same thing as code in else{}
+      //! If ServiceThread::stop() doesn't check null pointer, the signal emitted might cause a crash.
+      //! Luckily it does and it should.
+      onStartButtonClicked();
     }
 }
 
