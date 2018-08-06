@@ -41,6 +41,7 @@ App::App(int &argc, char **argv)
 
 App::~App()
 {
+  AppManager::setSystemProxy(false);
   AppManager::writeAppConfig();
   Log::log_with_date_time("Exit", Log::INFO);
 }
