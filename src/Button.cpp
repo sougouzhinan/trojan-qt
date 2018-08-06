@@ -26,7 +26,7 @@ Button::Button(const QString &str,const int &w, const int &h, QWidget *parent)
   , text(str)
 {
   setText(str);
-  setFont("Verdana", 13);
+  setFontSize(15);
   this->setAutoFillBackground(true);
   this->setFixedSize(QSize(w,h));
 }
@@ -36,7 +36,7 @@ Button::Button(const QString &str, QWidget *parent)
   , height(30)
 {
   setText(str);
-  setFont("Verdana", 13);
+  setFontSize(15);
   this->setAutoFillBackground(true);
   this->setMinimumSize(QSize(width, height));
 }
@@ -50,7 +50,13 @@ void Button::setFont(const QFont &f)
 void Button::setFont(const QString &family, const int &pixelSize)
 {
   font.setFamily(family);
-  font.setPixelSize(14);
+  font.setPixelSize(pixelSize);
+  updateText();
+}
+
+void Button::setFontSize(const int &pixelSize)
+{
+  font.setPixelSize(pixelSize);
   updateText();
 }
 

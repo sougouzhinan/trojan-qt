@@ -209,6 +209,33 @@ bool AppManager::writeTrojanConfig()
   return true;
 }
 
+void AppManager::setSystemProxy(const bool &enabled)
+{
+  if(enabled)
+    {
+#ifdef Q_OS_LINUX
+      if(system("gsettings --version > /dev/null") == 0)
+        {
+          system(QString("gsettings set org.gnome.system.proxy.socks port %1").arg(client_config_obj["local_port"].toString("0")).toStdString().c_str());
+          system(QString("gsettings set org.gnome.system.proxy.socks host %1").arg(client_config_obj["local_addr"].toString("0")).toStdString().c_str());
+          system("gsettings set org.gnome.system.proxy ignore-hosts \"[]\"");
+          system("gsettings set org.gnome.system.proxy mode \"manual\"");
+        }
+#endif
+    }
+  else
+    {
+#ifdef Q_OS_LINUX
+      if(system("gsettings --version > /dev/null") == 0)
+        {
+          system(QString("gsettings set org.gnome.system.proxy.socks port 0").toStdString().c_str());
+          system(QString("gsettings set org.gnome.system.proxy.socks host 0").toStdString().c_str());
+          system("gsettings set org.gnome.system.proxy mode \"none\"");
+        }
+#endif
+    }
+}
+
 void AppManager::popMessageBox(LogLevel l, QString info, QWidget *parent)
 {
   QMessageBox *msgBox = new QMessageBox(parent);

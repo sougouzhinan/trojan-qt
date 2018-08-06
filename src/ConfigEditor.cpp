@@ -4,11 +4,11 @@ ConfigEditor::ConfigEditor(const Config::RunType &t, QWidget *parent)
   : QWidget(parent)
   , run_type(t)
 {
-  QLabel *general_label = new QLabel("General", this);
+  QLabel *general_label = new QLabel("<b>General</b>", this);
   general_form_layout = new QFormLayout();
-  QLabel *ssl_label = new QLabel("SSL Options", this);
+  QLabel *ssl_label = new QLabel("<b>SSL Options</b>", this);
   ssl_form_layout = new QFormLayout();
-  QLabel *tcp_label = new QLabel("TCP Options", this);
+  QLabel *tcp_label = new QLabel("<b>TCP Options</b>", this);
   tcp_form_layout = new QFormLayout();
 
   local_addr_le = new QLineEdit("127.0.0.1", this);

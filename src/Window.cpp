@@ -112,10 +112,17 @@ void Window::onServerStarted(const bool &sucess)
   if(sucess)
     {
       body_widget->setStartButtonState(BodyWidget::Stop);
+      if(AppManager::current_run_type == Config::CLIENT)
+        {
+          AppManager::setSystemProxy(true);
+        }
     }
   else
     {
-      body_widget->setStartButtonState(BodyWidget::Start);
+      //! Lazy tweak: Should do the same thing as code in else{}
+      //! If ServiceThread::stop() doesn't check null pointer, the signal emitted might cause a crash.
+      //! Luckily it does and it should.
+      onStartButtonClicked();
     }
 }
 
@@ -141,6 +148,10 @@ void Window::onStartButtonClicked()
       body_widget->setStartButtonState(BodyWidget::Start);
       isRunning = false;
       emit stopTriggered();
+      if(AppManager::current_run_type == Config::CLIENT)
+        {
+          AppManager::setSystemProxy(false);
+        }
     }
 }
 

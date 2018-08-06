@@ -7,6 +7,7 @@
 #include <QJsonObject>
 #include <QString>
 #include <QMessageBox>
+#include <QProcess>
 #include <QStandardPaths>
 #include <QFile>
 #include <QDir>
@@ -45,6 +46,7 @@ public:
   static bool loadTrojanConfig();
   static bool writeTrojanConfig();
 
+  static void setSystemProxy(const bool &enabled);
 
   static void popMessageBox(LogLevel l, QString info, QWidget *parent);
 
