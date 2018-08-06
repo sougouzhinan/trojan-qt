@@ -18,12 +18,12 @@ ConfigEditor::ConfigEditor(const Config::RunType &t, QWidget *parent)
   passwd_le = new QLineEdit(this);
   passwd_le->setPlaceholderText("••••••••");
   log_level_combo = new QComboBox(this);
-  log_level_combo->addItem("all", 0);
-  log_level_combo->addItem("information", 1);
-  log_level_combo->addItem("warnings", 2);
-  log_level_combo->addItem("errors", 3);
-  log_level_combo->addItem("fatal", 4);
-  log_level_combo->addItem("off", 5);
+  log_level_combo->addItem("ALL", 0);
+  log_level_combo->addItem("INFO", 1);
+  log_level_combo->addItem("WARN", 2);
+  log_level_combo->addItem("ERROR", 3);
+  log_level_combo->addItem("FATAL", 4);
+  log_level_combo->addItem("OFF", 5);
   log_level_combo->setCurrentIndex(0);
   ssl_cert_path_le = new QLineEdit(this);
   ssl_cipher_le = new QLineEdit(this);
